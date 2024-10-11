@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <!-- Titles -->
+  {% if current_user.is_authenticated %}
+  
+    {% set profile_title = 'Admin Dashboard' %}
+
+  {% endif %}
+
+  <title>{% block title %}{{ profile_title }}{% endblock %}</title>
+  <!-- End of Titles -->
+
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon"
+  href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm1-15h-2v4H7v2h4v4h2v-4h4v-2h-4z'/></svg>" />
+  <!-- Font Awesome icons-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Custom fonts for this template-->
+  <link href="/static/admin dashboard static/Admin dashboard startboostrap/vendor/fontawesome-free/css/all.min.css"
+    rel="stylesheet" type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+
+  <!-- Custom styles for this template-->
+  <link href="/static/admin dashboard static/Admin dashboard startboostrap/css/sb-admin-2.min.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    {% include '/dashboard/sidebar.html' %}
+
+    <!-- End of Sidebar -->
+
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Navbar -->
+
+        {% if current_user.is_authenticated %}
+
+        <!--Profile Navbar -->
+        {% include '/dashboard/navbar-beta.html' %}
+
+
+
+
+
+
+
+
+
+        {% endif %}
+        <!-- End of Navbar -->
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!--Ckeditor-->
+          {{ ckeditor.load() }}
+
+          <!-- Flash Messages -->
+          {%include 'dashboard/flash-messages.html'%}
+          <!-- End of Flash Messages -->
+
+          {% block content %}
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+      {% endblock %}
+
+
+      <!-- Footer-->
+
+      {% if current_user.is_authenticated %}
+            {% include '/dashboard/footer.html' %}
+
+     
+      <!-- End of Footer -->
+
+      {% endif %}
+      <!-- End of Footer -->
+
+
+
+
+
+
+
+
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Select "Logout" below if you are ready to end your current session.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          <a class="btn btn-primary" href="{{url_for('auth_bp.logout')}}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Admin Dashboard Scripts (Include in dashboard templates) -->
+<!-- jQuery -->
+<script src="/static/admin dashboard static/Admin dashboard startboostrap/vendor/jquery/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript (Bootstrap 4) -->
+<script
+  src="/static/admin dashboard static/Admin dashboard startboostrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery Easing Plugin -->
+<script
+  src="/static/admin dashboard static/Admin dashboard startboostrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages -->
+<script src="/static/admin dashboard static/Admin dashboard startboostrap/js/sb-admin-2.min.js"></script>
+<!-- Page level plugins (if needed) -->
+<script src="/static/admin dashboard static/Admin dashboard startboostrap/vendor/chart.js/Chart.min.js"></script>
+<!-- Page level custom scripts (if needed) -->
+<script src="/static/admin dashboard static/Admin dashboard startboostrap/js/demo/chart-area-demo.js"></script>
+<script src="/static/admin dashboard static/Admin dashboard startboostrap/js/demo/chart-pie-demo.js"></script>
+
+<!-- Main Website Scripts (Include in main website templates) -->
+<!-- Bootstrap core JS (Bootstrap 5) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- Custom scripts for the main website -->
+<script src="/static/care template  1 static/js/scripts.js"></script>
+<script>
+  // Email Editing
+  document.getElementById('editEmailButton').addEventListener('click', function () {
+    document.getElementById('emailInput').removeAttribute('readonly');
+    document.getElementById('editEmailButton').classList.add('d-none');
+    document.getElementById('saveEmailButton').classList.remove('d-none');
+    document.getElementById('cancelEmailButton').classList.remove('d-none');
+  });
+
+  document.getElementById('cancelEmailButton').addEventListener('click', function () {
+    document.getElementById('emailInput').setAttribute('readonly', 'readonly');
+    document.getElementById('editEmailButton').classList.remove('d-none');
+    document.getElementById('saveEmailButton').classList.add('d-none');
+    document.getElementById('cancelEmailButton').classList.add('d-none');
+    // Reset the email to its original value
+    document.getElementById('emailInput').value = "{{ current_user.email }}";
+  });
+  // Phone Number Editing
+  document.getElementById('editPhoneButton').addEventListener('click', function () {
+    document.getElementById('phoneInput').removeAttribute('readonly');
+    document.getElementById('editPhoneButton').classList.add('d-none');
+    document.getElementById('savePhoneButton').classList.remove('d-none');
+    document.getElementById('cancelPhoneButton').classList.remove('d-none');
+  });
+
+  document.getElementById('cancelPhoneButton').addEventListener('click', function () {
+    document.getElementById('phoneInput').setAttribute('readonly', 'readonly');
+    document.getElementById('editPhoneButton').classList.remove('d-none');
+    document.getElementById('savePhoneButton').classList.add('d-none');
+    document.getElementById('cancelPhoneButton').classList.add('d-none');
+    // Reset the phone number to its original value
+    document.getElementById('phoneInput').value = "{{ current_user.phone_number }}";
+  });
+
+
+
+
+                        document.getElementById('editAboutButton').addEventListener('click', function() {
+                            document.getElementById('aboutInput').removeAttribute('readonly');
+                            document.getElementById('saveAboutButton').classList.remove('d-none');
+                            document.getElementById('cancelAboutButton').classList.remove('d-none');
+                            this.classList.add('d-none');
+                        });
+
+                        document.getElementById('cancelAboutButton').addEventListener('click', function() {
+                            document.getElementById('aboutInput').setAttribute('readonly', true);
+                            document.getElementById('saveAboutButton').classList.add('d-none');
+                            document.getElementById('editAboutButton').classList.remove('d-none');
+                            this.classList.add('d-none');
+                        });
+
+
+
+</script>
+
+
+</body>
+
+</html>
