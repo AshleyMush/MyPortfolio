@@ -132,6 +132,39 @@
                 </div>
             </div>
 
+            <!-- Bottom Left Card-->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Social Media Handles</h6>
+                </div>
+                <div class="card-body">
+                    <form id="socialsForm" method="POST" action="{{ url_for('user_bp.update_social_media_form') }}">
+                        {{ socials_form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ socials_form.github.label(class="form-label") }}
+                            {{ socials_form.github(class="form-control", id="githubInput", placeholder=current_user.github_url) }}
+                        </div>
+                        <div class="form-group">
+                            {{ socials_form.hackerrank.label(class="form-label") }}
+                            {{ socials_form.hackerrank(class="form-control", id="hackerrankInput", placeholder=current_user.hackerrank_url) }}
+                        </div>
+                        <div class="form-group">
+                            {{ socials_form.instagram.label(class="form-label") }}
+                            {{ socials_form.instagram(class="form-control", id="instagramInput", placeholder=current_user.instagram_url) }}
+                        </div>
+                        <div class="form-group">
+                            {{ socials_form.facebook.label(class="form-label") }}
+                            {{ socials_form.facebook(class="form-control", id="facebookInput", placeholder=current_user.facebook_url) }}
+                        </div>
+                        <div class="form-group">
+                            {{ socials_form.linkedin.label(class="form-label") }}
+                            {{ socials_form.linkedin(class="form-control", id="linkedinInput", placeholder=current_user.linkedin_url) }}
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Save</button>
+                    </form>
+                </div>
+            </div>
+
 
             <!--End of Bottom Left Card-->
         </div>
@@ -148,7 +181,7 @@
                     <div class="me-4">
                         <hr class="sidebar-divider" />
                         <h7 class="text-muted">Tell people a bit yourself.</h7>
-                        <form id="aboutForm" method="POST" action="{{ url_for('user_bp.about_me') }}">
+                        <form id="aboutForm" method="POST" action="{{ url_for('user_bp.about_me_form') }}">
                             <!-- CSRF token -->
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <div class="form-group">
@@ -233,18 +266,20 @@
             <!--End of Top Right Card-->
 
             <!-- Bottom Right Card -->
+            
 
             <!-- Hints and tips - Accordion -->
             <div class="card shadow mb-4">
 
                 <a href="#collapseCardExample" class="d-block card-header py-3 collapsed" data-toggle="collapse"
                     role="button" aria-expanded="false" aria-controls="collapseCardExample">
-                    <h6 class="m-0 font-weight-bold text-primary">Hints and tips</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Social Media Handles</h6>
                 </a>
                 <!-- Card Content - Collapse -->
                 <div class="collapse" id="collapseCardExample" style="">
                     <div class="card-body">
-                       To logout, click on the logout button which wll appear after you click your picture on the top right corner of the page.
+                        To logout, click on the logout button which wll appear after you click your picture on the top
+                        right corner of the page.
                     </div>
                 </div>
             </div>

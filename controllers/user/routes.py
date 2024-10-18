@@ -5,11 +5,159 @@ from utils.decorators import  nocache
 from datetime import date
 from utils.email_utils import send_approval_message, send_demotion_message
 from . import user_bp
-from forms.user_forms import UpdateEmailForm, UpdatePhoneForm, ChangePasswordForm, AboutMeForm
-from models import db, User
+from models import db, User, Experience, Education, Skills, Language, Projects, Home
 from utils.encryption import check_password_hash, generate_password_hash
+from forms import HomePageContentForm, ProjectsPageForm, ExperienceForm,  UpdateEmailForm\
+    , SocialMediaInfoForm,UpdatePhoneForm, ChangePasswordForm, AboutMeForm\
+    , EducationForm, SkillsForm, LanguageForm, ProjectsPageForm, EducationForm\
+    , ExperienceForm, AboutMeForm
 
 
+@user_bp.route('/update-Home-Page', methods=['GET', 'POST'])
+@roles_required('Admin')
+def update_home_page():
+    """
+    This function updates the home page content
+    """
+    form = HomePageContentForm()
+    if form.validate_on_submit():
+        if form.subheading.data:
+            current_user.subheading = form.subheading.data
+        if form.description.data:
+            current_user.description = form.description.data
+        if form.img_url.data:
+            current_user.img_url = form.img_url.data
+        db.session.commit()
+        flash('Home Page Content updated successfully.', 'success')
+        return redirect(url_for('user_bp.update_home_page'))
+    return render_template('dashboard/update-home-content.html', form=form)
+
+
+# ----------------- Experience----------------- #
+
+@user_bp.route('/add-experience', methods=['GET', 'POST'])
+@roles_required('Admin')
+def add_experience():
+    """
+    This function adds a experience to the database
+    :return:
+    """
+    form = ExperienceForm()
+    if form.validate_on_submit():
+        new_experience = Experience(
+            duration=form.duration.data,
+            role=form.role.data,
+            company=form.company.data,
+            location=form.location.data,
+            description=form.description.data
+        )
+        db.session.add(new_experience)
+        db.session.commit()
+        flash('Experience added successfully', 'success')
+        return redirect(url_for('user_bp.get_experience'))
+    return render_template('dashboard/add-experience.html', form=form)
+
+
+@user_bp.route('/work-experience', methods=['GET', 'POST'])
+@roles_required('Admin')
+def get_experience():
+    """
+    This function gets all the experience from the database
+    :return:
+    """
+    work_experience = Experience.query.all()
+    return render_template('/dashboard/experience.html', work_experience=work_experience)
+
+@user_bp.route('/delete-experience/<int:experience_id>', methods=['GET', 'DELETE'])
+@roles_required('Admin')
+def delete_experience(experience_id):
+    """
+    This function deletes a experience from the database
+    :param experience_id:
+    :return:
+    """
+    experience_to_delete = Experience.query.get_or_404(experience_id)
+    db.session.delete(experience_to_delete)
+    db.session.commit()
+    flash('Experience deleted successfully', 'info')
+    return redirect(url_for('user_bp.get_experience'))
+
+@user_bp.route('/update-experience/<int:experience_id>', methods=['GET', 'POST'])
+@roles_required('Admin')
+def update_experience(experience_id):
+    """
+    This function updates the resume page content
+    """
+    experience_to_update = Experience.query.get_or_404(experience_id)
+    form = ExperienceForm()
+    if form.validate_on_submit():
+        if form.duration.data:
+            experience_to_update.duration = form.duration.data
+        if form.role.data:
+            experience_to_update.role = form.role.data
+        if form.company.data:
+            experience_to_update.company = form.company.data
+        if form.location.data:
+            experience_to_update.location = form.location.data
+        if form.description.data:
+            experience_to_update.description = form.description.data
+        db.session.commit()
+        flash('Updated successfully.', 'success')
+        return redirect(url_for('user_bp.get_experience'))
+    return render_template('dashboard/update-experience.html', form=form, experience=experience_to_update)
+
+
+
+
+
+
+
+
+
+
+
+@user_bp.route('/update-education', methods=['GET', 'POST'])
+@roles_required('Admin')
+def update_education_page():
+    """
+    This function updates the education page content
+    """
+    form = EducationForm()
+    if form.validate_on_submit():
+        if form.institution.data:
+            current_user.institution = form.institution.data
+        if form.qualification.data:
+            current_user.qualification = form.qualification.data
+        if form.description.data:
+            current_user.description = form.description.data
+        if form.duration.data:
+            current_user.duration = form.duration.data
+        db.session.commit()
+        flash('Education Page Content updated successfully.', 'success')
+        return redirect(url_for('user_bp.update_education_page'))
+    return render_template('dashboard/update-education-content.html', form=form)
+
+
+
+
+
+
+@user_bp.route('/update-projects-page', methods=['GET', 'POST'])
+@roles_required('Admin')
+def update_projects_page():
+    """
+    This function updates the projects page content
+    """
+    form = ProjectsPageForm()
+    if form.validate_on_submit():
+        if form.title.data:
+            current_user.title = form.title.data
+        if form.information.data:
+            current_user.information = form.information.data
+        db.session.commit()
+        flash('Projects Page Content updated successfully.', 'success')
+        return redirect(url_for('user_bp.update_projects_page'))
+    return render_template('dashboard/update-projects-content.html', form=form)
 
 
 
@@ -21,21 +169,25 @@ def profile():
     email_form = UpdateEmailForm()
     phone_form = UpdatePhoneForm()
     password_form = ChangePasswordForm()
+    socials_form = SocialMediaInfoForm()
 
     email_form.email.data = current_user.email
     phone_form.phone_number.data = current_user.phone_number
+
+
     return render_template('dashboard/profile.html', email_form=email_form, phone_form=phone_form,
-                           password_form=password_form)
+                           password_form=password_form, socials_form=socials_form)
 
 
 @user_bp.route('/about-me', methods=['GET', 'POST'])
 @roles_required( 'Admin')
 @login_required
-def about_me():
+def about_me_form():
     """
     This function handles the about me page for the user, admin, and contributor.
     """
     form = AboutMeForm()
+
 
     if form.validate_on_submit():
         about = form.about.data
@@ -51,6 +203,30 @@ def about_me():
 
     return redirect(url_for('user_bp.profile'))
 
+
+@user_bp.route('/update-social-media', methods=['POST'])
+@roles_required('Admin')
+def update_social_media_form():
+    form = SocialMediaInfoForm()
+    if form.validate_on_submit():
+        if form.github.data:
+            current_user.github_url = form.github.data
+        if form.linkedin.data:
+            current_user.linkedin_url = form.linkedin.data
+        if form.facebook.data:
+            current_user.facebook_url = form.facebook.data
+        if form.instagram.data:
+            current_user.instagram_url = form.instagram.data
+        if form.hackerrank.data:
+            current_user.hackerrank_url = form.hackerrank.data
+        db.session.commit()
+        flash('Social media links updated successfully.', 'success')
+        return redirect(url_for('user_bp.profile'))
+    else:
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f"{getattr(form, field).label.text}: {error}", 'danger')
+    return redirect(url_for('user_bp.profile'))
 
 
 
@@ -116,6 +292,54 @@ def change_password():
             for error in errors:
                 flash(f"{getattr(form, field).label.text}: {error}", 'danger')
     return redirect(url_for('user_bp.profile'))
+
+
+# # ----------------- Home Page----------------- #
+
+# @user_bp.route('/get-home-content', methods=['GET'])
+# @roles_required('Admin')
+# def get_home_content():
+#     """
+#     This function gets all the home page content from the database
+#     :return:
+#     """
+#     home_content = HomePage.query.all()
+#     return render_template('/dashboard/home-content.html', home_content=home_content)
+
+
+# @user_bp.route('/patch-home-content/<int:home_id>', methods=['PATCH', 'POST', 'GET'])
+# @roles_required('Admin')
+# def partially_update_home_content(home_id):
+#     """
+#     This function partially updates the home page content
+#     :param home_id:
+#     :return:
+#     """
+#     form = HomePageInfoForm()
+#     home_content = HomePage.query.get_or_404(home_id)
+#
+#     if request.method in ['POST', 'PATCH']:
+#         if form.validate_on_submit():
+#             if form.name.data:
+#                 home_content.name = form.name.data
+#             if form.heading.data:
+#                 home_content.heading = form.heading.data
+#             if form.subheading.data:
+#                 home_content.subheading = form.subheading.data
+#             if form.img_url.data:
+#                 home_content.img_url = form.img_url.data
+#
+#             db.session.commit()
+#             flash('Home Page Content updated successfully', 'success')
+#             return redirect(url_for('admin_bp.partially_update_home_content', home_id=home_id))
+#         else:
+#             # Form has errors
+#             for field, errors in form.errors.items():
+#                 for error in errors:
+#                     flash(f'Error in {field}: {error}', 'danger')
+#
+#     return render_template('/dashboard/edit-home-content.html', form=form, home=home_content)
+
 
 
 
@@ -219,52 +443,7 @@ def change_password():
 #     return redirect(url_for('admin_bp.get_users'))
 #
 #
-# # ----------------- Home Page----------------- #
-#
-# @user_bp.route('/get-home-content', methods=['GET'])
-# @roles_required('Admin')
-# def get_home_content():
-#     """
-#     This function gets all the home page content from the database
-#     :return:
-#     """
-#     home_content = HomePage.query.all()
-#     return render_template('/dashboard/home-content.html', home_content=home_content)
-#
-#
-# @user_bp.route('/patch-home-content/<int:home_id>', methods=['PATCH', 'POST', 'GET'])
-# @roles_required('Admin')
-# def partially_update_home_content(home_id):
-#     """
-#     This function partially updates the home page content
-#     :param home_id:
-#     :return:
-#     """
-#     form = HomePageInfoForm()
-#     home_content = HomePage.query.get_or_404(home_id)
-#
-#     if request.method in ['POST', 'PATCH']:
-#         if form.validate_on_submit():
-#             if form.name.data:
-#                 home_content.name = form.name.data
-#             if form.heading.data:
-#                 home_content.heading = form.heading.data
-#             if form.subheading.data:
-#                 home_content.subheading = form.subheading.data
-#             if form.img_url.data:
-#                 home_content.img_url = form.img_url.data
-#
-#             db.session.commit()
-#             flash('Home Page Content updated successfully', 'success')
-#             return redirect(url_for('admin_bp.partially_update_home_content', home_id=home_id))
-#         else:
-#             # Form has errors
-#             for field, errors in form.errors.items():
-#                 for error in errors:
-#                     flash(f'Error in {field}: {error}', 'danger')
-#
-#     return render_template('/dashboard/edit-home-content.html', form=form, home=home_content)
-#
+
 #
 # # ----------------- Services----------------- #
 #

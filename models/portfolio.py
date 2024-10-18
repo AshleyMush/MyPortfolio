@@ -10,55 +10,58 @@ from . import db
 
 
 
-class AboutMe(db.Model):
-    __tablename__ = 'AboutMe'
+class Home(db.Model):
+    __tablename__ = 'HomePage'
     id: Mapped[int] = mapped_column(primary_key=True)
-    id: Mapped[int] = mapped_column(primary_key=True)
-    heading: Mapped[str] = mapped_column(String(255), nullable=False)
+    subheading: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(String(255), nullable=True)
     img_url: Mapped[str] = mapped_column(String(255), nullable=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=True)
-    email: Mapped[str] = mapped_column(String(100), nullable=True)
-    resume_url: Mapped[str] = mapped_column(String(255), nullable=True)
-    github_url: Mapped[str] = mapped_column(String(255), nullable=True)
-    linkedin_url: Mapped[str] = mapped_column(String(255), nullable=True)
+
 
 
 
     def __repr__(self):
-        return f'<AboutMe {self.name}>'
+        return f'<HomePage{self.name}>'
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
-class Resume(db.Model):
-    __tablename__ = 'Resume'
+class Experience(db.Model):
+    __tablename__ = 'Experience'
     id: Mapped[int] = mapped_column(primary_key=True)
+    duration: Mapped[str] = mapped_column(String(50))
     role: Mapped[str] = mapped_column(String(100))
+    company: Mapped[str] = mapped_column(String(100))
     location: Mapped[str] = mapped_column(String(100))
     description: Mapped[str] = mapped_column(String(255))
-    file_url: Mapped[str] = mapped_column(String(255))
-    duration: Mapped[str] = mapped_column(String(50))
 
     def __repr__(self):
-        return f'<Resume {self.title}>'
+        return f'<Experience{self.title}>'
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
-class Projects(db.Model):
-    __tablename__ = 'Projects'
+class Education(db.Model):
+    __tablename__ = 'Education'
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(String(100), nullable=True)
-    description: Mapped[str] = mapped_column(String(255), nullable=True)
-    img_url: Mapped[str] = mapped_column(String(255), nullable=True)
-    github_url: Mapped[str] = mapped_column(String(255), nullable=True)
-    demo_url: Mapped[str] = mapped_column(String(255), nullable=True)
-    tech_stack: Mapped[str] = mapped_column(String(255), nullable=True)
-
+    duration: Mapped[str] = mapped_column(String(50))
+    institution: Mapped[str] = mapped_column(String(100))
+    qualification: Mapped[str] = mapped_column(String(100))
+    description: Mapped[str] = mapped_column(String(255))
 
     def __repr__(self):
-        return f'<Projects {self.title}>'
+        return f'<Education{self.title}>'
+
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+class Language(db.Model):
+    __tablename__ = 'Languages'
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
+
+    def __repr__(self):
+        return f'<Language{self.name}>'
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
@@ -66,12 +69,25 @@ class Projects(db.Model):
 class Skills(db.Model):
     __tablename__ = 'Skills'
     id: Mapped[int] = mapped_column(primary_key=True)
-    name : Mapped[str] = mapped_column(String(100), nullable=False)
-    languages: Mapped[str] = mapped_column(String(255), nullable=True)
+    name: Mapped[str] = mapped_column(String(100), nullable=False)
 
     def __repr__(self):
-        return f'<Skills {self.name}>'
+        return f'<Skills{self.name}>'
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
+
+class Projects(db.Model):
+    __tablename__ = 'Projects'
+    thumbnail: Mapped[str] = mapped_column(String(255), nullable=True)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(String(100), nullable=True)
+    description: Mapped[str] = mapped_column(String(255), nullable=True)
+
+
+    def __repr__(self):
+        return f'<Projects {self.title}>'
+
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}

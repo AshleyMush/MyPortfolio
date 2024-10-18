@@ -9,5 +9,5 @@ db = SQLAlchemy()
 
 
 
-from .portfolio import AboutMe, Resume, Projects, Skills
+from .portfolio import  Experience, Projects, Skills, Home, Education, Language, Projects
 from .user import User

@@ -29,10 +29,9 @@ def login():
     # Check if any users exist in the database.
     user_count = User.query.count()
     if user_count == 0:
-        hide_registration = True  # First dashboard becomes Admin
+        hide_registration = False  # Allow registration (no users in the DB)
     else:
-
-        hide_registration = False
+        hide_registration = True  # Hide registration (users exist in the DB)
 
     if current_user.is_authenticated:
 

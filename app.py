@@ -12,7 +12,7 @@ from controllers.auth import auth_bp
 from controllers.portfolio import portfolio_bp
 from models.user import User
 from models import db
-from models.portfolio import AboutMe, Resume, Projects, Skills
+from models.portfolio import  Experience, Projects, Skills
 import os
 from sqlalchemy.exc import SQLAlchemyError
 from models.user import User

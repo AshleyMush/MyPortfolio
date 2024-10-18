@@ -35,32 +35,51 @@
 
   <!-- Nav Item - Pages Collapse Menu -->
 
-  <!-- Manage Users -->
+  <!-- Edit Home Page -->
   <li class="nav-item">
-    <a class="nav-link" href="#">
-      <i class="fa-solid fa-users-gear"></i> <span>Manage Users</span>
+    <a class="nav-link" href="{{url_for('user_bp.update_home_page')}}">
+      <i class="fa-solid fa-gear"></i> <span>Edit home page</span>
     </a>
   </li>
 
-  <!--Customise pages-->
- <!-- <li class="nav-item">
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomise" aria-expanded="true"
-      aria-controls="collapseCustomise">
+
+
+
+  <!--Customise Resume Page-->
+<li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResume" aria-expanded="true"
+      aria-controls="collapseResume">
       <i class="fas fa-fw fa-wrench"></i>
-      <span>Customise</span>
+      <span>Resume Page</span>
     </a>
-    <div id="collapseCustomise" class="collapse" aria-labelledby="headingCustomise" data-parent="#accordionSidebar">
+    <div id="collapseResume" class="collapse" aria-labelledby="headingResume" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
         <h6 class="collapse-header">modify content</h6>
-        <a class="collapse-item" href="#">Home page</a>
-        <a class="collapse-item" href="#">Services</a>
-        <a class="collapse-item" href="#">Contact Info</a>
-        <a class="collapse-item" href="#">About Us</a>
-        <a class="collapse-item" href="utilities-other.html">Careers</a>
+        <a class="collapse-item" href="{{url_for('user_bp.get_experience')}}">Work Experience</a>
+        <a class="collapse-item" href="#">Education</a>
+                <a class="collapse-item" href="#">Education</a>
+        <a class="collapse-item" href="#">Skills</a>
+        <a class="collapse-item" href="#">Languages</a>
       </div>
     </div>
   </li>
-  -->
+
+  <!--Customise Projects Page-->
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProjects" aria-expanded="true"
+      aria-controls="collapseProjects">
+      <i class="fas fa-fw fa-wrench"></i>
+      <span>Projects Page</span>
+    </a>
+    <div id="collapseProjects" class="collapse" aria-labelledby="headingProjects" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <h6 class="collapse-header">modify content</h6>
+        <a class="collapse-item" href="#">Example Page</a>
+        <a class="collapse-item" href="#">Example Page</a>
+        <a class="collapse-item" href="#">Example Page</a>
+      </div>
+    </div>
+  </li>
 
 
 <!--Blog content-->
