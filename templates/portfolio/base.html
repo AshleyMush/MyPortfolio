@@ -7,6 +7,24 @@
     <meta name="description" content />
     <meta name="author" content />
     <title>{% block title %} Ashley's Portfolio{% endblock %}</title>
+<!--Open Graph tags-->
+    <!-- Basic Meta Tags for the Page -->
+    <meta name="description" content="A brief description of your website content">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Ashley's Portfolio">
+    <meta property="og:description" content="Ashley’s Portfolio, showcasing my projects, skills, and experiences.">
+    <meta property="og:image" content="https://www.freepik.com/free-vector/colorful-illustration-programmer-working_5483064.htm#fromView=search&page=1&position=32&uuid=e4c5b30b-5a12-4f2e-8aee-e76e6757a60d">
+    <!-- Image must be at least 1200x630 px -->
+    <meta property="og:url" content="https://yourwebsite.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Ashley's Portfolio">
+
+
+
+
+
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/static/portfolio/assets/favicon.ico" />
     <!-- Custom Google font-->
@@ -71,6 +89,7 @@
                 {% else %}
                 | <a href="{{ url_for('user_bp.profile') }}" class="text-muted"
                     style="text-decoration: none;">Dashboard</a>
+                    | <a href="{{ url_for('auth_bp.logout') }}" class="text-muted" style="text-decoration: none;">Logout</a>
                 {% endif %}
             </span>
         </div>
