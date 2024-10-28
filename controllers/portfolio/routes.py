@@ -24,6 +24,7 @@ def home():
 def contact():
     form = ContactForm()
     subject = 'Email from Your Portfolio Contact Form'
+    user = User.query.first()
 
     if form.validate_on_submit():
         name = bleach.clean(form.name.data)
@@ -45,7 +46,7 @@ def contact():
             for error in errors:
                 flash(f'Error in {field}: {error}', 'danger')
 
-    return render_template('portfolio/contact.html', form=form, current_year=CURRENT_YEAR)
+    return render_template('portfolio/contact.html', form=form, current_year=CURRENT_YEAR, user=user)
 
 
 @portfolio_bp.route('/resume', methods=['GET']  )
