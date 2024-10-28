@@ -9,6 +9,26 @@ from wtforms.widgets import ListWidget, CheckboxInput
 from utils.validators import PhoneNumberValidator
 
 
+class ContactForm(FlaskForm):
+    """
+    Form for contact page
+    """
+    name = StringField(label='Name', validators=[DataRequired(), Length(max=64)],
+                       render_kw={"placeholder": "Name",
+                                  "class": "contact-form"})
+
+    email = StringField(label='Email', validators=[DataRequired(), Email(message="You seem to be missing @ or .",
+                                                                         check_deliverability=True)])
+
+
+    message = TextAreaField(label='Message', validators=[DataRequired()],
+                            render_kw={"placeholder": "Enter your message here",
+                                       "class": "col-12"})
+
+    submit = SubmitField(label='Send Message', render_kw={"class": "btn btn-dark col-12",
+                                                          "id": "contact_submit_btn"})
+
+
 class HomePageContentForm(FlaskForm):
     subheading  = StringField('Subheading')
     description = TextAreaField('Homepage Description', validators=[Optional()])
@@ -21,6 +41,8 @@ class ProjectsPageForm(FlaskForm):
     thumbnail = StringField('Thumbnail Image URL', validators=[URL(message="Please enter a valid URL for the project thumbnail.")])
     title = StringField('Project Title', validators=[DataRequired()])
     description = CKEditorField('Project description')
+    demo_link = StringField('Demo Link', validators=[URL(message="Please enter a valid URL for the project demo.")])
+    repo_link = StringField('Repository Link', validators=[URL(message="Please enter a valid URL for the project repository.")])
     submit = SubmitField('Save Changes')
 
 class ExperienceForm(FlaskForm):

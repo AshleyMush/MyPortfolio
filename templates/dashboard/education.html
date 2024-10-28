@@ -1,0 +1,40 @@
+{% extends '/dashboard/base.html' %}
+
+{% block title %}Manage Education{% endblock %}
+
+{% block content %}
+<section class="container">
+    <h1 class="fw-light">Manage Education</h1>
+    <a href="{{ url_for('user_bp.add_education') }}" class="btn btn-primary mb-3">Add New Education</a>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Institution</th>
+                            <th>Qualification</th>
+                            <th>Duration</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for education in education_list %}
+                        <tr>
+                            <td>{{ education.institution }}</td>
+                            <td>{{ education.qualification }}</td>
+                            <td>{{ education.duration }}</td>
+                            <td>
+                                <a href="{{ url_for('user_bp.update_education', education_id=education.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                                <a href="{{ url_for('user_bp.delete_education', education_id=education.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

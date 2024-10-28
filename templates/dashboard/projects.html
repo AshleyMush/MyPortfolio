@@ -1,0 +1,33 @@
+{% extends '/dashboard/base.html' %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block title %}Manage Projects{% endblock %}
+
+{% block content %}
+<section class="container">
+    <h1 class="fw-light">Manage Projects</h1>
+    <a href="{{ url_for('user_bp.add_project') }}" class="btn btn-primary mb-3">Add New Project</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Thumbnail</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.title }}</td>
+                <td><img src="{{ project.thumbnail }}" alt="{{ project.title }}" style="width: 50px;"></td>
+                <td>
+                    <a href="{{ url_for('user_bp.update_project', project_id=project.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{{ url_for('user_bp.delete_project', project_id=project.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

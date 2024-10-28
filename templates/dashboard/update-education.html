@@ -1,0 +1,39 @@
+{% extends '/dashboard/base.html' %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block title %}Update Education{% endblock %}
+
+{% block content %}
+<section class="py-2 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Update Education</h1>
+        </div>
+    </div>
+</section>
+
+<form action="{{ url_for('user_bp.update_education', education_id=education.id) }}" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="container mt-4">
+        <div class="form-group">
+            <h3>{{ form.duration.label(class="form-label") }}</h3>
+            {{ form.duration(class="form-control", value=education.duration) }}
+        </div>
+        <div class="form-group">
+            <h3>{{ form.institution.label(class="form-label") }}</h3>
+            {{ form.institution(class="form-control", value=education.institution) }}
+        </div>
+        <div class="form-group">
+            <h3>{{ form.qualification.label(class="form-label") }}</h3>
+            {{ form.qualification(class="form-control", value=education.qualification) }}
+        </div>
+        <div class="form-group">
+            <h3>{{ form.description.label(class="form-label") }}</h3>
+            <textarea class="form-control" rows="3" name="description">{{ education.description }}</textarea>
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </div>
+</form>
+{% endblock %}

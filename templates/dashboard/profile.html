@@ -1,297 +1,238 @@
 {% extends '/dashboard/base.html' %}
-{% from 'bootstrap4/form.html' import render_form %}
 
-
-{%block title%}{{current_user.first_name}}'s Profile{%endblock%}
+{% block title %}{{ current_user.first_name }}'s Profile{% endblock %}
 
 {% block content %}
-<!-- Begin Page Content -->
 <div class="container-fluid">
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">
-        {{current_user.first_name}}'s Profile
-    </h1>
+    <h1 class="h3 mb-2 text-gray-800">{{ current_user.first_name }}'s Profile</h1>
+
+    <!-- Role Card -->
     <div class="row">
-        <!-- Role Card -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Role
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                {{current_user.role}}
-                            </div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Role</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ current_user.role }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-ranking-star fa-2x text-gray-300"></i>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 
-    <!-- Content Row -->
+    <!-- Profile Forms and Information -->
     <div class="row">
+        <!-- Left Column -->
+
         <div class="col-lg-6 mb-4">
-            <!-- About Card -->
+            <!-- About Me Form -->
             <div class="card shadow mb-4">
+
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">About</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">About Me</h6>
                 </div>
                 <div class="card-body">
-                    <div class="text-center">
-                        <div class="col mb-5 mb-5 mb-xl-0">
-                            <div class="text-center">
-                                <img class="img-fluid rounded-circle mb-4 px-4"
-                                    src="https://dummyimage.com/150x150/ced4da/6c757d" alt="..." />
-                                <h5 class="fw-bolder">
-                                    {{current_user.first_name}} {{current_user.last_name}}
-                                </h5>
-                                <div class="fst-italic text-muted">{{current_user.role}}</div>
-                            </div>
-                        </div>
-                        {% if current_user.about%}
-                        <p></p>
-                        {{current_user.about}}
-                        </p>
-                        {% else %}
-                        <p>You have not yet entered information about yourself on your profile 😢.</p>
-                        {% endif %}
-                    </div>
-
-
-                </div>
-            </div>
-
-            <!-- Bottom Left Card-->
-
-            <!-- Stats Card -->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        Profile Completion
-                    </h6>
-                </div>
-                <div class="card-body">
-
-
-                    <!-- <h4 class="small font-weight-bold">
-                        Server Migration <span class="float-right">20%</span>
-                    </h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    -->
-
-                    <!--
-                    <h4 class="small font-weight-bold">
-                        Sales Tracking <span class="float-right">40%</span>
-                    </h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    -->
-
-
-                    {% if current_user.phone_number and current_user.about %}
-                    <h4 class="small font-weight-bold">
-                        Account Setup <span class="float-right">Complete!</span>
-                    </h4>
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    {% elif current_user.phone_number or current_user.about %}
-                    <h4 class="small font-weight-bold">
-                        Account Setup <span class="float-right">80%</span>
-                    </h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    {% else %}
-                    <h4 class="small font-weight-bold">
-                        Account Setup <span class="float-right">60%</span>
-                    </h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60"
-                            aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Bottom Left Card-->
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Social Media Handles</h6>
-                </div>
-                <div class="card-body">
-                    <form id="socialsForm" method="POST" action="{{ url_for('user_bp.update_social_media_form') }}">
-                        {{ socials_form.hidden_tag() }}
+                    <form id="aboutForm" method="POST" action="{{ url_for('user_bp.about_me_form') }}">
+                        {{ about_me_form.hidden_tag() }}
                         <div class="form-group">
-                            {{ socials_form.github.label(class="form-label") }}
-                            {{ socials_form.github(class="form-control", id="githubInput", placeholder=current_user.github_url) }}
+                            {{ about_me_form.about.label(class="form-label") }}
+                            {{ about_me_form.about(class="form-control", id="aboutInput", rows="3", readonly=True) }}
                         </div>
-                        <div class="form-group">
-                            {{ socials_form.hackerrank.label(class="form-label") }}
-                            {{ socials_form.hackerrank(class="form-control", id="hackerrankInput", placeholder=current_user.hackerrank_url) }}
-                        </div>
-                        <div class="form-group">
-                            {{ socials_form.instagram.label(class="form-label") }}
-                            {{ socials_form.instagram(class="form-control", id="instagramInput", placeholder=current_user.instagram_url) }}
-                        </div>
-                        <div class="form-group">
-                            {{ socials_form.facebook.label(class="form-label") }}
-                            {{ socials_form.facebook(class="form-control", id="facebookInput", placeholder=current_user.facebook_url) }}
-                        </div>
-                        <div class="form-group">
-                            {{ socials_form.linkedin.label(class="form-label") }}
-                            {{ socials_form.linkedin(class="form-control", id="linkedinInput", placeholder=current_user.linkedin_url) }}
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">Save</button>
+                        <button type="button" class="btn btn-primary mt-2" id="editAboutButton">Edit</button>
+                        {{ about_me_form.submit(class="btn btn-success mt-2 d-none", id="saveAboutButton") }}
+                        <button type="button" class="btn btn-secondary mt-2 d-none" id="cancelAboutButton">Cancel</button>
                     </form>
                 </div>
             </div>
 
-
-            <!--End of Bottom Left Card-->
-        </div>
-
-        <!--Top Right Card-->
-        <div class="col-lg-6 mb-4">
-
+            <!-- Social Media Links Form -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Social Media Links</h6>
+    </div>
+    <div class="card-body">
+        <form id="socialMediaForm" method="POST" action="{{ url_for('user_bp.update_social_media_form') }}">
+            {{ socials_form.hidden_tag() }}
+            <div class="form-group">
+                {{ socials_form.github.label(class="form-label") }}
+                {{ socials_form.github(class="form-control", id="githubInput", readonly=True, value=current_user.github_url or '') }}
+            </div>
+            <div class="form-group">
+                {{ socials_form.linkedin.label(class="form-label") }}
+                {{ socials_form.linkedin(class="form-control", id="linkedinInput", readonly=True, value=current_user.linkedin_url or '') }}
+            </div>
+            <div class="form-group">
+                {{ socials_form.facebook.label(class="form-label") }}
+                {{ socials_form.facebook(class="form-control", id="facebookInput", readonly=True, value=current_user.facebook_url or '') }}
+            </div>
+            <div class="form-group">
+                {{ socials_form.instagram.label(class="form-label") }}
+                {{ socials_form.instagram(class="form-control", id="instagramInput", readonly=True, value=current_user.instagram_url or '') }}
+            </div>
+            <div class="form-group">
+                {{ socials_form.hackerrank.label(class="form-label") }}
+                {{ socials_form.hackerrank(class="form-control", id="hackerrankInput", readonly=True, value=current_user.hackerrank_url or '') }}
+            </div>
+            <button type="button" class="btn btn-primary mt-2" id="editSocialMediaButton">Edit</button>
+            {{ socials_form.submit(class="btn btn-success mt-2 d-none", id="saveSocialMediaButton") }}
+            <button type="button" class="btn btn-secondary mt-2 d-none" id="cancelSocialMediaButton">Cancel</button>
+        </form>
+    </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-lg-6 mb-4">
+            <!-- Email Form -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Update Email</h6>
                 </div>
                 <div class="card-body">
-                    <!--About Me Form-->
-                    <div class="me-4">
-                        <hr class="sidebar-divider" />
-                        <h7 class="text-muted">Tell people a bit yourself.</h7>
-                        <form id="aboutForm" method="POST" action="{{ url_for('user_bp.about_me_form') }}">
-                            <!-- CSRF token -->
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                            <div class="form-group">
-                                <label for="aboutInput">About Me</label>
-                                <textarea class="form-control" id="aboutInput" name="about" rows="3"
-                                    readonly>{{ current_user.about }}</textarea>
-                            </div>
-                            <button type="button" class="btn btn-primary mt-2" id="editAboutButton">Edit</button>
-                            <button type="submit" class="btn btn-success mt-2 d-none" id="saveAboutButton">Save</button>
-                            <button type="button" class="btn btn-secondary mt-2 d-none"
-                                id="cancelAboutButton">Cancel</button>
-                        </form>
-                    </div>
-
-
-
-
-                    <!-- Email Editing Form -->
-                    <div class="me-4">
-                        <hr class="sidebar-divider" />
-                        <h7 class="text-muted">Login Information</h7>
-                        <form id="emailForm" method="POST" action="{{ url_for('user_bp.update_email') }}">
-                            {{ email_form.hidden_tag() }}
-                            <div class="form-group">
-                                {{ email_form.email.label(class="form-label") }}
-                                {{ email_form.email(class="form-control", id="emailInput", readonly=True) }}
-                            </div>
-                            <button type="button" class="btn btn-primary mt-2" id="editEmailButton">Edit</button>
-                            {{ email_form.submit(class="btn btn-success mt-2 d-none", id="saveEmailButton") }}
-                            <button type="button" class="btn btn-secondary mt-2 d-none"
-                                id="cancelEmailButton">Cancel</button>
-                        </form>
-                    </div>
-                    <!-- Phone Number Editing Form -->
-                    <div class="me-4 mt-4">
-                        <form id="phoneForm" method="POST" action="{{ url_for('user_bp.update_phone_number') }}"
-                            class="needs-validation" novalidate>
-                            {{ phone_form.hidden_tag() }}
-                            <div class="form-group">
-                                {{ phone_form.phone_number.label(class="form-label") }}
-                                {{ phone_form.phone_number(class="form-control", id="phoneInput", readonly=True) }}
-                            </div>
-                            <button type="button" class="btn btn-primary mt-2" id="editPhoneButton">Edit</button>
-                            {{ phone_form.submit(class="btn btn-success mt-2 d-none", id="savePhoneButton") }}
-                            <button type="button" class="btn btn-secondary mt-2 d-none"
-                                id="cancelPhoneButton">Cancel</button>
-                        </form>
-                    </div>
-                    <!-- Change Password Section -->
-                    <div class="mt-4">
-                        <h5 class="text-muted">Change Password</h5>
-                        <form id="passwordForm" method="POST" action="{{ url_for('user_bp.change_password') }}">
-                            <!-- CSRF token -->
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                            <div class="form-group">
-                                <label for="currentPassword">Current Password</label>
-                                <input type="password" class="form-control"
-                                    placeholder="Enter Your Current Password Here" id="currentPassword"
-                                    name="current_password" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="newPassword">New Password</label>
-                                <input type="password" class="form-control" id="newPassword" name="new_password"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmNewPassword">Confirm New Password</label>
-                                <input type="password" class="form-control" id="confirmNewPassword"
-                                    name="confirm_new_password" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-2">Change Password</button>
-                        </form>
-                    </div>
-
-
-
-
-
+                    <form id="emailForm" method="POST" action="{{ url_for('user_bp.update_email') }}">
+                        {{ email_form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ email_form.email.label(class="form-label") }}
+                            {{ email_form.email(class="form-control", id="emailInput", readonly=True) }}
+                        </div>
+                        <button type="button" class="btn btn-primary mt-2" id="editEmailButton">Edit</button>
+                        {{ email_form.submit(class="btn btn-success mt-2 d-none", id="saveEmailButton") }}
+                        <button type="button" class="btn btn-secondary mt-2 d-none" id="cancelEmailButton">Cancel</button>
+                    </form>
                 </div>
             </div>
 
-            <!--End of Top Right Card-->
-
-            <!-- Bottom Right Card -->
-            
-
-            <!-- Hints and tips - Accordion -->
+            <!-- Phone Number Form -->
             <div class="card shadow mb-4">
-
-                <a href="#collapseCardExample" class="d-block card-header py-3 collapsed" data-toggle="collapse"
-                    role="button" aria-expanded="false" aria-controls="collapseCardExample">
-                    <h6 class="m-0 font-weight-bold text-primary">Social Media Handles</h6>
-                </a>
-                <!-- Card Content - Collapse -->
-                <div class="collapse" id="collapseCardExample" style="">
-                    <div class="card-body">
-                        To logout, click on the logout button which wll appear after you click your picture on the top
-                        right corner of the page.
-                    </div>
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Update Phone Number</h6>
+                </div>
+                <div class="card-body">
+                    <form id="phoneForm" method="POST" action="{{ url_for('user_bp.update_phone_number') }}">
+                        {{ phone_form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ phone_form.phone_number.label(class="form-label") }}
+                            {{ phone_form.phone_number(class="form-control", id="phoneInput", readonly=True) }}
+                        </div>
+                        <button type="button" class="btn btn-primary mt-2" id="editPhoneButton">Edit</button>
+                        {{ phone_form.submit(class="btn btn-success mt-2 d-none", id="savePhoneButton") }}
+                        <button type="button" class="btn btn-secondary mt-2 d-none" id="cancelPhoneButton">Cancel</button>
+                    </form>
                 </div>
             </div>
 
-            <!-- End of Bottom Right Card-->
-
-
-
+            <!-- Password Change Form -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Change Password</h6>
+                </div>
+                <div class="card-body">
+                    <form id="passwordForm" method="POST" action="{{ url_for('user_bp.change_password') }}">
+                        {{ password_form.hidden_tag() }}
+                        <div class="form-group">{{ password_form.current_password.label(class="form-label") }}{{ password_form.current_password(class="form-control") }}</div>
+                        <div class="form-group">{{ password_form.new_password.label(class="form-label") }}{{ password_form.new_password(class="form-control") }}</div>
+                        <div class="form-group">{{ password_form.confirm_new_password.label(class="form-label") }}{{ password_form.confirm_new_password(class="form-control") }}</div>
+                        {{ password_form.submit(class="btn btn-primary mt-3") }}
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Main Website Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/static/care template  1 static/js/scripts.js"></script>
+
+<script>
+  // Email Editing
+  document.getElementById('editEmailButton').addEventListener('click', function () {
+    document.getElementById('emailInput').removeAttribute('readonly');
+    document.getElementById('editEmailButton').classList.add('d-none');
+    document.getElementById('saveEmailButton').classList.remove('d-none');
+    document.getElementById('cancelEmailButton').classList.remove('d-none');
+  });
+
+  document.getElementById('cancelEmailButton').addEventListener('click', function () {
+    document.getElementById('emailInput').setAttribute('readonly', 'readonly');
+    document.getElementById('editEmailButton').classList.remove('d-none');
+    document.getElementById('saveEmailButton').classList.add('d-none');
+    document.getElementById('cancelEmailButton').classList.add('d-none');
+    document.getElementById('emailInput').value = "{{ current_user.email }}";
+  });
+
+  // Phone Number Editing
+  document.getElementById('editPhoneButton').addEventListener('click', function () {
+    document.getElementById('phoneInput').removeAttribute('readonly');
+    document.getElementById('editPhoneButton').classList.add('d-none');
+    document.getElementById('savePhoneButton').classList.remove('d-none');
+    document.getElementById('cancelPhoneButton').classList.remove('d-none');
+  });
+
+  document.getElementById('cancelPhoneButton').addEventListener('click', function () {
+    document.getElementById('phoneInput').setAttribute('readonly', 'readonly');
+    document.getElementById('editPhoneButton').classList.remove('d-none');
+    document.getElementById('savePhoneButton').classList.add('d-none');
+    document.getElementById('cancelPhoneButton').classList.add('d-none');
+    document.getElementById('phoneInput').value = "{{ current_user.phone_number }}";
+  });
+
+  // About Me Editing
+  document.getElementById('editAboutButton').addEventListener('click', function() {
+    document.getElementById('aboutInput').removeAttribute('readonly');
+    document.getElementById('saveAboutButton').classList.remove('d-none');
+    document.getElementById('cancelAboutButton').classList.remove('d-none');
+    this.classList.add('d-none');
+  });
+
+  document.getElementById('cancelAboutButton').addEventListener('click', function() {
+    document.getElementById('aboutInput').setAttribute('readonly', true);
+    document.getElementById('saveAboutButton').classList.add('d-none');
+    document.getElementById('editAboutButton').classList.remove('d-none');
+    this.classList.add('d-none');
+    document.getElementById('aboutInput').value = "{{ current_user.about }}";
+  });
 
 
+   // Social Media Links Editing
+  document.getElementById('editSocialMediaButton').addEventListener('click', function () {
+    // Enable all social media input fields
+    document.getElementById('githubInput').removeAttribute('readonly');
+    document.getElementById('linkedinInput').removeAttribute('readonly');
+    document.getElementById('facebookInput').removeAttribute('readonly');
+    document.getElementById('instagramInput').removeAttribute('readonly');
+    document.getElementById('hackerrankInput').removeAttribute('readonly');
+
+    // Show save and cancel buttons, hide edit button
+    document.getElementById('editSocialMediaButton').classList.add('d-none');
+    document.getElementById('saveSocialMediaButton').classList.remove('d-none');
+    document.getElementById('cancelSocialMediaButton').classList.remove('d-none');
+  });
+
+  document.getElementById('cancelSocialMediaButton').addEventListener('click', function () {
+    // Set all social media input fields back to read-only
+    document.getElementById('githubInput').setAttribute('readonly', 'readonly');
+    document.getElementById('linkedinInput').setAttribute('readonly', 'readonly');
+    document.getElementById('facebookInput').setAttribute('readonly', 'readonly');
+    document.getElementById('instagramInput').setAttribute('readonly', 'readonly');
+    document.getElementById('hackerrankInput').setAttribute('readonly', 'readonly');
+
+    // Reset values to original
+    document.getElementById('githubInput').value = "{{ current_user.github_url or '' }}";
+    document.getElementById('linkedinInput').value = "{{ current_user.linkedin_url or '' }}";
+    document.getElementById('facebookInput').value = "{{ current_user.facebook_url or '' }}";
+    document.getElementById('instagramInput').value = "{{ current_user.instagram_url or '' }}";
+    document.getElementById('hackerrankInput').value = "{{ current_user.hackerrank_url or '' }}";
+
+    // Show edit button, hide save and cancel buttons
+    document.getElementById('editSocialMediaButton').classList.remove('d-none');
+    document.getElementById('saveSocialMediaButton').classList.add('d-none');
+    document.getElementById('cancelSocialMediaButton').classList.add('d-none');
+  });
+</script>
 {% endblock %}

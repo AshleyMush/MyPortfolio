@@ -1,0 +1,30 @@
+{% extends '/dashboard/base.html' %}
+
+{% block title %}Manage Languages{% endblock %}
+
+{% block content %}
+<section class="container">
+    <h1 class="fw-light">Manage Languages (maximum of 6)</h1>
+    <a href="{{ url_for('user_bp.add_language') }}" class="btn btn-primary mb-3">Add New Language</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Language</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for language in languages %}
+            <tr>
+                <td>{{ language.name }}</td>
+                <td>
+                    <a href="{{ url_for('user_bp.update_language', language_id=language.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                    <a href="{{ url_for('user_bp.delete_language', language_id=language.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

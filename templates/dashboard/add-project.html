@@ -1,0 +1,14 @@
+{% extends '/dashboard/base.html' %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+
+{% block title %}Add Project{% endblock %}
+
+{% block content %}
+
+
+
+
+{{ render_form(form, novalidate=True)}}
+
+{% endblock %}

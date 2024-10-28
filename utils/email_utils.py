@@ -12,12 +12,12 @@ ADMIN_EMAIL_PW = os.environ.get("PASSWORD_KEY")
 
 
 
-def send_confirmation_email(name, email, subject, service='gmail'):
+def send_user_response_email(name, email, subject, service='gmail'):
     """
     Sends a confirmation email to the dashboard.
     """
     current_year = datetime.now().year
-    email_content = render_template('email/user_email.html', name=name)
+    email_content = render_template('email/user_aknowledgement_email.html', name=name)
 
     msg = MIMEText(email_content, 'html')
     msg['From'] = ADMIN_EMAIL_ADDRESS

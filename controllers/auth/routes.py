@@ -21,42 +21,38 @@ def login():
     """
     This function handles the login process.
 
-    If the dashboard is already authenticated, redirect to the dashboard dashboard.
-    If the form is valid on submission, check the dashboard's credentials.
-    If the credentials are valid, log the dashboard in and redirect based on their role.
+    If a user is already authenticated, redirect them to their profile.
+    If the form is valid on submission, check the user's credentials.
+    If the credentials are valid, log the user in and redirect based on their role.
     If the credentials are invalid, flash an error message and render the login form again.
     """
-    # Check if any users exist in the database.
-    user_count = User.query.count()
-    if user_count == 0:
-        hide_registration = False  # Allow registration (no users in the DB)
-    else:
-        hide_registration = True  # Hide registration (users exist in the DB)
 
+    # Check if any users exist in the database to control registration visibility
+    hide_registration = User.query.count() > 0
+
+    # Redirect authenticated users directly to their profile
     if current_user.is_authenticated:
-
-            return redirect(url_for('user_bp.profile'))
+        return redirect(url_for('user_bp.profile'))
 
     form = LoginForm()
+
+    # If the form is submitted and valid, check credentials
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
         result = db.session.execute(db.select(User).where(User.email == email))
-
         user = result.scalar()
 
         if user and check_password_hash(user.password, password):
             flash('Logged in successfully', 'success')
-            login_user(user, remember=form.remember_me.data)  # Uses remember_me checkbox value
-
+            login_user(user, remember=form.remember_me.data)  # Log in user
             return redirect(url_for('user_bp.profile'))
 
         else:
             flash('Invalid email or password', 'danger')
-            return render_template("/auth/login.html", form=form)
 
+    # Render login form, passing hide_registration to the template
     return render_template("/auth/login.html", form=form, hide_registration=hide_registration)
-
 
 
 #

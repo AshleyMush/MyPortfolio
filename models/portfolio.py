@@ -80,10 +80,12 @@ class Skills(db.Model):
 
 class Projects(db.Model):
     __tablename__ = 'Projects'
-    thumbnail: Mapped[str] = mapped_column(String(255), nullable=True)
     id: Mapped[int] = mapped_column(primary_key=True)
+    thumbnail: Mapped[str] = mapped_column(String(255), nullable=True)
     title: Mapped[str] = mapped_column(String(100), nullable=True)
     description: Mapped[str] = mapped_column(String(255), nullable=True)
+    repo_link: Mapped[str] = mapped_column(String(255), nullable=True)
+    demo_link: Mapped[str] = mapped_column(String(255), nullable=True)
 
 
     def __repr__(self):

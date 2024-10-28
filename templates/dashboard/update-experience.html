@@ -1,0 +1,43 @@
+{% extends '/dashboard/base.html' %}
+{% from 'bootstrap4/form.html' import render_form %}
+
+{% block title %}Update Experience{% endblock %}
+
+{% block content %}
+<section class="py-2 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Update Experience</h1>
+        </div>
+    </div>
+</section>
+
+<form action="{{ url_for('user_bp.update_experience', experience_id=experience.id) }}" method="POST">
+    {{ form.hidden_tag() }}
+    <div class="container mt-4">
+        <div class="form-group">
+            <h3>{{ form.duration.label(class="form-label") }}</h3>
+            {{ form.duration(class="form-control", value=experience.duration) }}
+        </div>
+        <div class="form-group">
+            <h3>{{ form.role.label(class="form-label") }}</h3>
+            {{ form.role(class="form-control", value=experience.role) }}
+        </div>
+        <div class="form-group">
+            <h3>{{ form.company.label(class="form-label") }}</h3>
+            {{ form.company(class="form-control", value=experience.company) }}
+        </div>
+        <div class="form-group">
+            <h3>{{ form.location.label(class="form-label") }}</h3>
+            {{ form.location(class="form-control", value=experience.location) }}
+        </div>
+        <div class="form-group">
+            <h3>{{ form.description.label(class="form-label") }}</h3>
+            <textarea class="form-control" rows="3" name="description">{{ experience.description }}</textarea>
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </div>
+</form>
+{% endblock %}
