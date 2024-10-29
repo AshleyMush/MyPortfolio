@@ -47,6 +47,9 @@ app.register_blueprint(user_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(portfolio_bp)
 
+
+
+
 # Error Handler for 404
 @app.errorhandler(404)
 def page_not_found(e):
