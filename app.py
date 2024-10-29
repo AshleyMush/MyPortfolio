@@ -53,15 +53,11 @@ def page_not_found(e):
 # Automatically create the database tables if they don't exist
 with app.app_context():
     try:
-        print("Attempting to create tables...")
         db.create_all()
-        print("Database and tables created successfully.")
     except SQLAlchemyError as e:
-        print(f"Error occurred during db.create_all(): {e}")
         db.session.rollback()
-    except Exception as e:
-        print(f"Unexpected error: {e}")
+
 
 # Run the Application
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=False, port=5002)
