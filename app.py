@@ -24,7 +24,7 @@ if not os.path.exists(instance_path):
 # Configure the database URI to point to the instance folder
 app.config['SECRET_KEY'] = os.environ.get("SECRET_APP_KEY", "default_secret_key")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    "SQLALCHEMY_DATABASE_URI", f"sqlite:///{os.path.join(instance_path, 'Portfolio.db')}"
+    "DATABASE_URI", f"sqlite:///{os.path.join(instance_path, 'Portfolio.db')}"
 )
 
 # Initialize extensions
