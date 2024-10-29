@@ -27,7 +27,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     "DATABASE_URI", f"sqlite:///{os.path.join(instance_path, 'Portfolio.db')}"
 )
 
-# Initialize extensions
+# Initialize extensions.
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 csrf = CSRFProtect(app)
