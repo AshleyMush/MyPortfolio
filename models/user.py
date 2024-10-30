@@ -11,11 +11,11 @@ from . import db
 class User(db.Model, UserMixin):
     __tablename__ = "UserDetails"
     id : Mapped[int] = mapped_column(primary_key=True)
-    email : Mapped[str] = mapped_column(String(100), nullable=True)
-    password : Mapped[str] = mapped_column(String(100), nullable=False)
-    first_name: Mapped[str] = mapped_column(String(100), nullable=False)
-    last_name : Mapped[str] = mapped_column(String(100), nullable=False)
-    phone_number : Mapped[str] = mapped_column(String(100), nullable=True)
+    email : Mapped[str] = mapped_column(String(255), nullable=True)
+    password : Mapped[str] = mapped_column(String(255), nullable=False)
+    first_name: Mapped[str] = mapped_column(String(255), nullable=False)
+    last_name : Mapped[str] = mapped_column(String(255), nullable=False)
+    phone_number : Mapped[str] = mapped_column(String(255), nullable=True)
     about : Mapped[str] = mapped_column(String(255), nullable=True)
     github_url: Mapped[str] = mapped_column(String(255), nullable=True)
     linkedin_url: Mapped[str] = mapped_column(String(255), nullable=True)

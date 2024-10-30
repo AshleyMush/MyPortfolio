@@ -48,7 +48,8 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(portfolio_bp)
 
 
-
+# Initialize Flask-Migrate
+migrate = Migrate(app, db)
 
 # Error Handler for 404
 @app.errorhandler(404)
