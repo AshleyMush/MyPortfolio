@@ -59,7 +59,7 @@ app.register_blueprint(portfolio_bp)
 
 
 # Initialize Flask-Migrate
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 
 # Error Handler for 404
 @app.errorhandler(404)
@@ -76,4 +76,4 @@ with app.app_context():
 
 # Run the Application
 if __name__ == "__main__":
-    app.run(debug=False, port=5002)
+    app.run(debug=True, port=5002)
