@@ -13,9 +13,9 @@ from . import db
 class Home(db.Model):
     __tablename__ = 'HomePage'
     id: Mapped[int] = mapped_column(primary_key=True)
-    subheading: Mapped[str] = mapped_column(String(255), nullable=False)
-    description: Mapped[str] = mapped_column(String(255), nullable=True)
-    img_url: Mapped[str] = mapped_column(String(255), nullable=True)
+    subheading: Mapped[str] = mapped_column(String(2000), nullable=False)
+    description: Mapped[str] = mapped_column(String(2000), nullable=True)
+    img_url: Mapped[str] = mapped_column(String(2000), nullable=True)
 
 
 
@@ -29,11 +29,11 @@ class Home(db.Model):
 class Experience(db.Model):
     __tablename__ = 'Experience'
     id: Mapped[int] = mapped_column(primary_key=True)
-    duration: Mapped[str] = mapped_column(String(50))
-    role: Mapped[str] = mapped_column(String(100))
-    company: Mapped[str] = mapped_column(String(100))
-    location: Mapped[str] = mapped_column(String(100))
-    description: Mapped[str] = mapped_column(String(255))
+    duration: Mapped[str] = mapped_column(String(5000))
+    role: Mapped[str] = mapped_column(String(2000))
+    company: Mapped[str] = mapped_column(String(2000))
+    location: Mapped[str] = mapped_column(String(2000))
+    description: Mapped[str] = mapped_column(String(2000))
 
     def __repr__(self):
         return f'<Experience{self.title}>'
@@ -44,10 +44,10 @@ class Experience(db.Model):
 class Education(db.Model):
     __tablename__ = 'Education'
     id: Mapped[int] = mapped_column(primary_key=True)
-    duration: Mapped[str] = mapped_column(String(50))
-    institution: Mapped[str] = mapped_column(String(100))
-    qualification: Mapped[str] = mapped_column(String(100))
-    description: Mapped[str] = mapped_column(String(255))
+    duration: Mapped[str] = mapped_column(String(500))
+    institution: Mapped[str] = mapped_column(String(2000))
+    qualification: Mapped[str] = mapped_column(String(2000))
+    description: Mapped[str] = mapped_column(String(2000))
 
     def __repr__(self):
         return f'<Education{self.title}>'
@@ -58,7 +58,7 @@ class Education(db.Model):
 class Language(db.Model):
     __tablename__ = 'Languages'
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    name: Mapped[str] = mapped_column(String(2000), nullable=False)
 
     def __repr__(self):
         return f'<Language{self.name}>'
@@ -69,7 +69,7 @@ class Language(db.Model):
 class Skills(db.Model):
     __tablename__ = 'Skills'
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(100), nullable=False)
+    name: Mapped[str] = mapped_column(String(2000), nullable=False)
 
     def __repr__(self):
         return f'<Skills{self.name}>'
@@ -81,11 +81,11 @@ class Skills(db.Model):
 class Projects(db.Model):
     __tablename__ = 'Projects'
     id: Mapped[int] = mapped_column(primary_key=True)
-    thumbnail: Mapped[str] = mapped_column(String(255), nullable=True)
-    title: Mapped[str] = mapped_column(String(100), nullable=True)
-    description: Mapped[str] = mapped_column(String(255), nullable=True)
-    repo_link: Mapped[str] = mapped_column(String(255), nullable=True)
-    demo_link: Mapped[str] = mapped_column(String(255), nullable=True)
+    thumbnail: Mapped[str] = mapped_column(String(2000), nullable=True)
+    title: Mapped[str] = mapped_column(String(2000), nullable=True)
+    description: Mapped[str] = mapped_column(String(2000), nullable=True)
+    repo_link: Mapped[str] = mapped_column(String(2000), nullable=True)
+    demo_link: Mapped[str] = mapped_column(String(2000), nullable=True)
 
 
     def __repr__(self):
