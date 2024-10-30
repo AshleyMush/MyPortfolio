@@ -10,7 +10,7 @@ from controllers.user import user_bp
 from controllers.auth import auth_bp
 from controllers.portfolio import portfolio_bp
 from sqlalchemy.exc import SQLAlchemyError
-from flask_migrate import Migrate
+from flask_migrate import Migrate, upgrade
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -26,6 +26,16 @@ app.config['SECRET_KEY'] = os.environ.get("SECRET_APP_KEY", "default_secret_key"
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
     "DATABASE_URI", f"sqlite:///{os.path.join(instance_path, 'Portfolio.db')}"
 )
+
+
+@app.before_first_request
+def apply_migrations():
+    with app.app_context():
+        try:
+            upgrade()  # Run migrations on startup
+        except Exception as e:
+            print(f"Migration error: {e}")
+
 
 # Initialize extensions.
 ckeditor = CKEditor(app)
