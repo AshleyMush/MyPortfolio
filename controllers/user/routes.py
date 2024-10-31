@@ -371,13 +371,44 @@ def add_project():
         new_project = Projects(
             thumbnail=form.thumbnail.data,
             title=form.title.data,
-            description=form.description.data
+            description=form.description.data,
+            repo_link = form.repo_link.data,
+            demo_link = form.demo_link.data
         )
         db.session.add(new_project)
         db.session.commit()
         flash('Project added successfully', 'success')
         return redirect(url_for('user_bp.get_projects'))
     return render_template('dashboard/add-project.html', form=form)
+
+
+@user_bp.route('/update-project/<int:project_id>', methods=['GET', 'POST'])
+@roles_required('Admin')
+def update_project(project_id):
+    """
+    This function updates the project page content
+    """
+    project_to_update = Projects.query.get_or_404(project_id)
+    form = ProjectsPageForm()
+    if form.validate_on_submit():
+        if form.thumbnail.data:
+            project_to_update.thumbnail = form.thumbnail.data
+        if form.title.data:
+            project_to_update.title = form.title.data
+        if form.description.data:
+            project_to_update.description = form.description.data
+        db.session.commit()
+
+        if form.repo_link.data:
+            project_to_update.repo_link = form.repo_link.data
+
+        if form.demo_link.data:
+            project_to_update.demo_link = form.demo_link.data
+
+        flash('Updated successfully.', 'success')
+        return redirect(url_for('user_bp.get_projects'))
+
+    return render_template('dashboard/update-project.html', form=form, project=project_to_update)
 
 @user_bp.route('/projects', methods=['GET', 'POST'])
 @roles_required('Admin')
@@ -403,26 +434,7 @@ def delete_project(project_id):
     flash('Project deleted successfully', 'info')
     return redirect(url_for('user_bp.get_projects'))
 
-@user_bp.route('/update-project/<int:project_id>', methods=['GET', 'POST'])
-@roles_required('Admin')
-def update_project(project_id):
-    """
-    This function updates the project page content
-    """
-    project_to_update = Projects.query.get_or_404(project_id)
-    form = ProjectsPageForm()
-    if form.validate_on_submit():
-        if form.thumbnail.data:
-            project_to_update.thumbnail = form.thumbnail.data
-        if form.title.data:
-            project_to_update.title = form.title.data
-        if form.description.data:
-            project_to_update.description = form.description.data
-        db.session.commit()
-        flash('Updated successfully.', 'success')
-        return redirect(url_for('user_bp.get_projects'))
 
-    return render_template('dashboard/update-project.html', form=form, project=project_to_update)
 
 
 

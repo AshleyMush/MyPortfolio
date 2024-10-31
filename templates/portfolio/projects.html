@@ -20,7 +20,7 @@
                                 <h2 class="fw-bolder">{{ project.title}}</h2>
                                 <p>{{ project.description | safe }}</p>
                                 <a class="btn btn-primary me-2 fw-bolder" href="{{project.demo_link}}" target="_blank">Live Demo</a>
-                                <a class="btn btn-secondary fw-bolder" href="{{project.repo_link}}" target="_blank">Source Code</a>
+                                <a class="btn btn-secondary fw-bolder" href="{{project.repo_link }}" target="_blank">Source Code</a>
                             </div>
                         </div>
                         <!-- Image Section -->
@@ -43,7 +43,7 @@
                 <div class="container px-5 my-5">
                     <div class="text-center">
                         <h2 class="display-4 fw-bolder mb-4">Let's build something together</h2>
-                        <a class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder" href="contact.html">Contact me</a>
+                        <a class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder" href="{{url_for('portfolio_bp.contact')}}">Contact me</a>
                     </div>
                 </div>
             </section>

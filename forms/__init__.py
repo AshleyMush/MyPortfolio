@@ -1,8 +1,8 @@
-from . import auth, portfolio_forms, user_forms
+from . import auth, dashboard_forms, portfolio_forms
 from .auth import RegisterForm, LoginForm
-from .portfolio_forms import HomePageContentForm,\
+from .dashboard_forms import HomePageContentForm,\
     ProjectsPageForm, ExperienceForm, EducationForm, SkillsForm, LanguageForm, ProjectsPageForm, ContactForm
-from .user_forms import SocialMediaInfoForm, UpdateEmailForm,\
+from .portfolio_forms import SocialMediaInfoForm, UpdateEmailForm,\
     UpdatePhoneForm, ChangePasswordForm, AboutMeForm
 
 
