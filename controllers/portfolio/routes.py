@@ -29,9 +29,12 @@ def contact():
     subject = 'Email from Your Portfolio Contact Form'
     user = User.query.first()
 
+    # Retrieve the reCAPTCHA secret and site keys
+    secret_key = os.environ.get('RECAPTCHA_SECRET_KEY')
+    site_key = os.environ.get('RECAPTCHA_SITE_KEY')  # Add this line
+
     # Check for reCAPTCHA response
     recaptcha_response = request.form.get('g-recaptcha-response')
-    secret_key = os.environ.get('RECAPTCHA_SECRET_KEY')
     data = {
         'secret': secret_key,
         'response': recaptcha_response
@@ -47,7 +50,6 @@ def contact():
         email = bleach.clean(form.email.data)
         message = bleach.clean(form.message.data)
 
-        # Flash success message
         flash('Message sent successfully', 'success')
 
         # Send emails
@@ -63,7 +65,14 @@ def contact():
             for error in errors:
                 flash(f'Error in {field}: {error}', 'danger')
 
-    return render_template('portfolio/contact.html', form=form, current_year=CURRENT_YEAR, user=user)
+    # Pass the site_key to the template
+    return render_template(
+        'portfolio/contact.html',
+        form=form,
+        current_year=CURRENT_YEAR,
+        user=user,
+        site_key=site_key  # Add this line
+    )
 
 
 @portfolio_bp.route('/resume', methods=['GET']  )
