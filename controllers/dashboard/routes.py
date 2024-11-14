@@ -4,7 +4,7 @@ from utils.decorators import roles_required
 from utils.decorators import  nocache
 from datetime import date
 from utils.email_utils import send_approval_message, send_demotion_message
-from . import user_bp
+from . import dashboard_bp
 from models import db, User, Experience, Education, Skills, Language, Projects, Home
 from utils.encryption import check_password_hash, generate_password_hash
 from forms import HomePageContentForm, ProjectsPageForm, ExperienceForm,  UpdateEmailForm\
@@ -13,14 +13,14 @@ from forms import HomePageContentForm, ProjectsPageForm, ExperienceForm,  Update
     , ExperienceForm, AboutMeForm, ContactForm
 
 
-@user_bp.app_context_processor
+@dashboard_bp.app_context_processor
 def inject_home_content_status():
     home_exists = Home.query.count() > 0
     return {'home_exists': home_exists}
 
 
 
-@user_bp.route('/add-home-content', methods=['GET', 'POST'])
+@dashboard_bp.route('/add-home-content', methods=['GET', 'POST'])
 @roles_required('Admin')
 def add_home_content():
     """
@@ -38,7 +38,7 @@ def add_home_content():
             db.session.add(new_home_content)
             db.session.commit()
             flash('Home Page Content added successfully', 'success')
-            return redirect(url_for('user_bp.update_home_page'))
+            return redirect(url_for('dashboard_bp.update_home_page'))
         except Exception as e:
             # If something goes wrong, roll back and print the error
             db.session.rollback()
@@ -52,7 +52,7 @@ def add_home_content():
 
 
 
-@user_bp.route('/update-Home-Page', methods=['GET', 'POST'])
+@dashboard_bp.route('/update-Home-Page', methods=['GET', 'POST'])
 @roles_required('Admin')
 def update_home_page():
     """
@@ -62,7 +62,7 @@ def update_home_page():
     home_content_to_update = Home.query.first()
     if not home_content_to_update:
         flash("No home content found to update, Please add the content below.", 'warning')
-        return redirect(url_for('user_bp.add_home_content'))
+        return redirect(url_for('dashboard_bp.add_home_content'))
 
     form = HomePageContentForm()
 
@@ -80,7 +80,7 @@ def update_home_page():
 
         db.session.commit()
         flash('Home Page Content updated successfully.', 'success')
-        return redirect(url_for('user_bp.update_home_page'))
+        return redirect(url_for('dashboard_bp.update_home_page'))
 
     return render_template('dashboard/update-home-content.html', form=form, home=home_content_to_update)
 
@@ -88,7 +88,7 @@ def update_home_page():
 
 # ----------------- Experience----------------- #
 
-@user_bp.route('/add-experience', methods=['GET', 'POST'])
+@dashboard_bp.route('/add-experience', methods=['GET', 'POST'])
 @roles_required('Admin')
 def add_experience():
     """
@@ -107,11 +107,11 @@ def add_experience():
         db.session.add(new_experience)
         db.session.commit()
         flash('Experience added successfully', 'success')
-        return redirect(url_for('user_bp.get_experience'))
+        return redirect(url_for('dashboard_bp.get_experience'))
     return render_template('dashboard/add-experience.html', form=form)
 
 
-@user_bp.route('/work-experience', methods=['GET', 'POST'])
+@dashboard_bp.route('/work-experience', methods=['GET', 'POST'])
 @roles_required('Admin')
 def get_experience():
     """
@@ -121,7 +121,7 @@ def get_experience():
     work_experience = Experience.query.all()
     return render_template('/dashboard/experience.html', work_experience=work_experience)
 
-@user_bp.route('/delete-experience/<int:experience_id>', methods=['GET', 'DELETE'])
+@dashboard_bp.route('/delete-experience/<int:experience_id>', methods=['GET', 'DELETE'])
 @roles_required('Admin')
 def delete_experience(experience_id):
     """
@@ -133,9 +133,9 @@ def delete_experience(experience_id):
     db.session.delete(experience_to_delete)
     db.session.commit()
     flash('Experience deleted successfully', 'info')
-    return redirect(url_for('user_bp.get_experience'))
+    return redirect(url_for('dashboard_bp.get_experience'))
 
-@user_bp.route('/update-experience/<int:experience_id>', methods=['GET', 'POST'])
+@dashboard_bp.route('/update-experience/<int:experience_id>', methods=['GET', 'POST'])
 @roles_required('Admin')
 def update_experience(experience_id):
     """
@@ -156,13 +156,13 @@ def update_experience(experience_id):
             experience_to_update.description = form.description.data
         db.session.commit()
         flash('Updated successfully.', 'success')
-        return redirect(url_for('user_bp.get_experience'))
+        return redirect(url_for('dashboard_bp.get_experience'))
     return render_template('dashboard/update-experience.html', form=form, experience=experience_to_update)
 
 
 # ----------------- Education----------------- #
 
-@user_bp.route('/add-education', methods=['GET', 'POST'])
+@dashboard_bp.route('/add-education', methods=['GET', 'POST'])
 @roles_required('Admin')
 def add_education():
     """
@@ -180,11 +180,11 @@ def add_education():
         db.session.add(new_education)
         db.session.commit()
         flash('Education added successfully', 'success')
-        return redirect(url_for('user_bp.get_education'))
+        return redirect(url_for('dashboard_bp.get_education'))
     return render_template('dashboard/add-education.html', form=form)
 
 
-@user_bp.route('/education', methods=['GET', 'POST'])
+@dashboard_bp.route('/education', methods=['GET', 'POST'])
 @roles_required('Admin')
 def get_education():
     """
@@ -194,7 +194,7 @@ def get_education():
     education = Education.query.all()
     return render_template('/dashboard/education.html', education_list=education)
 
-@user_bp.route('/delete-education/<int:education_id>', methods=['GET', 'DELETE'])
+@dashboard_bp.route('/delete-education/<int:education_id>', methods=['GET', 'DELETE'])
 @roles_required('Admin')
 def delete_education(education_id):
     """
@@ -206,9 +206,9 @@ def delete_education(education_id):
     db.session.delete(education_to_delete)
     db.session.commit()
     flash('Education deleted successfully', 'info')
-    return redirect(url_for('user_bp.get_education'))
+    return redirect(url_for('dashboard_bp.get_education'))
 
-@user_bp.route('/update-education/<int:education_id>', methods=['GET', 'POST'])
+@dashboard_bp.route('/update-education/<int:education_id>', methods=['GET', 'POST'])
 @roles_required('Admin')
 def update_education(education_id):
     """
@@ -227,13 +227,13 @@ def update_education(education_id):
             education_to_update.description = form.description.data
         db.session.commit()
         flash('Updated successfully.', 'success')
-        return redirect(url_for('user_bp.get_education'))
+        return redirect(url_for('dashboard_bp.get_education'))
     return render_template('dashboard/update-education.html', form=form, education=education_to_update)
 
 
 # ----------------- Skills----------------- #
 
-@user_bp.route('/add-skill', methods=['GET', 'POST'])
+@dashboard_bp.route('/add-skill', methods=['GET', 'POST'])
 @roles_required('Admin')
 def add_skill():
     """
@@ -248,10 +248,10 @@ def add_skill():
         db.session.add(new_skill)
         db.session.commit()
         flash('Skill added successfully', 'success')
-        return redirect(url_for('user_bp.get_skills'))
+        return redirect(url_for('dashboard_bp.get_skills'))
     return render_template('dashboard/add-skill.html', form=form)
 
-@user_bp.route('/skills', methods=['GET', 'POST'])
+@dashboard_bp.route('/skills', methods=['GET', 'POST'])
 @roles_required('Admin')
 def get_skills():
     """
@@ -261,7 +261,7 @@ def get_skills():
     skills = Skills.query.all()
     return render_template('/dashboard/skills.html', skills=skills)
 
-@user_bp.route('/delete-skill/<int:skill_id>', methods=['GET', 'DELETE'])
+@dashboard_bp.route('/delete-skill/<int:skill_id>', methods=['GET', 'DELETE'])
 @roles_required('Admin')
 def delete_skill(skill_id):
     """
@@ -273,9 +273,9 @@ def delete_skill(skill_id):
     db.session.delete(skill_to_delete)
     db.session.commit()
     flash('Skill deleted successfully', 'info')
-    return redirect(url_for('user_bp.get_skills'))
+    return redirect(url_for('dashboard_bp.get_skills'))
 
-@user_bp.route('/update-skill/<int:skill_id>', methods=['GET', 'POST'])
+@dashboard_bp.route('/update-skill/<int:skill_id>', methods=['GET', 'POST'])
 @roles_required('Admin')
 def update_skill(skill_id):
     """
@@ -288,14 +288,14 @@ def update_skill(skill_id):
             skill_to_update.name = form.name.data
         db.session.commit()
         flash('Updated successfully.', 'success')
-        return redirect(url_for('user_bp.get_skills'))
+        return redirect(url_for('dashboard_bp.get_skills'))
 
     return render_template('dashboard/update-skill.html', form=form, skill=skill_to_update)
 
 
 # ----------------- Language----------------- #
 
-@user_bp.route('/add-language', methods=['GET', 'POST'])
+@dashboard_bp.route('/add-language', methods=['GET', 'POST'])
 @roles_required('Admin')
 def add_language():
     """
@@ -310,11 +310,11 @@ def add_language():
         db.session.add(new_language)
         db.session.commit()
         flash('Language added successfully', 'success')
-        return redirect(url_for('user_bp.get_languages'))
+        return redirect(url_for('dashboard_bp.get_languages'))
     return render_template('dashboard/add-language.html', form=form)
 
 
-@user_bp.route('/languages', methods=['GET', 'POST'])
+@dashboard_bp.route('/languages', methods=['GET', 'POST'])
 @roles_required('Admin')
 def get_languages():
     """
@@ -324,7 +324,7 @@ def get_languages():
     languages = Language.query.all()
     return render_template('/dashboard/languages.html', languages=languages)
 
-@user_bp.route('/delete-language/<int:language_id>', methods=['GET', 'DELETE'])
+@dashboard_bp.route('/delete-language/<int:language_id>', methods=['GET', 'DELETE'])
 @roles_required('Admin')
 def delete_language(language_id):
     """
@@ -336,10 +336,10 @@ def delete_language(language_id):
     db.session.delete(language_to_delete)
     db.session.commit()
     flash('Language deleted successfully', 'info')
-    return redirect(url_for('user_bp.get_languages'))
+    return redirect(url_for('dashboard_bp.get_languages'))
 
 
-@user_bp.route('/update-language/<int:language_id>', methods=['GET', 'POST'])
+@dashboard_bp.route('/update-language/<int:language_id>', methods=['GET', 'POST'])
 @roles_required('Admin')
 def update_language(language_id):
     """
@@ -352,14 +352,14 @@ def update_language(language_id):
             language_to_update.name = form.name.data
         db.session.commit()
         flash('Updated successfully.', 'success')
-        return redirect(url_for('user_bp.get_languages'))
+        return redirect(url_for('dashboard_bp.get_languages'))
 
     return render_template('dashboard/update-language.html', form=form, language=language_to_update)
 
 
 # ----------------- Projects----------------- #
 
-@user_bp.route('/add-project', methods=['GET', 'POST'])
+@dashboard_bp.route('/add-project', methods=['GET', 'POST'])
 @roles_required('Admin')
 def add_project():
     """
@@ -378,11 +378,11 @@ def add_project():
         db.session.add(new_project)
         db.session.commit()
         flash('Project added successfully', 'success')
-        return redirect(url_for('user_bp.get_projects'))
+        return redirect(url_for('dashboard_bp.get_projects'))
     return render_template('dashboard/add-project.html', form=form)
 
 
-@user_bp.route('/update-project/<int:project_id>', methods=['GET', 'POST'])
+@dashboard_bp.route('/update-project/<int:project_id>', methods=['GET', 'POST'])
 @roles_required('Admin')
 def update_project(project_id):
     """
@@ -406,11 +406,11 @@ def update_project(project_id):
             project_to_update.demo_link = form.demo_link.data
 
         flash('Updated successfully.', 'success')
-        return redirect(url_for('user_bp.get_projects'))
+        return redirect(url_for('dashboard_bp.get_projects'))
 
     return render_template('dashboard/update-project.html', form=form, project=project_to_update)
 
-@user_bp.route('/projects', methods=['GET', 'POST'])
+@dashboard_bp.route('/projects', methods=['GET', 'POST'])
 @roles_required('Admin')
 def get_projects():
     """
@@ -420,7 +420,7 @@ def get_projects():
     projects = Projects.query.all()
     return render_template('/dashboard/projects.html', projects=projects)
 
-@user_bp.route('/delete-project/<int:project_id>', methods=['GET', 'DELETE'])
+@dashboard_bp.route('/delete-project/<int:project_id>', methods=['GET', 'DELETE'])
 @roles_required('Admin')
 def delete_project(project_id):
     """
@@ -432,7 +432,7 @@ def delete_project(project_id):
     db.session.delete(project_to_delete)
     db.session.commit()
     flash('Project deleted successfully', 'info')
-    return redirect(url_for('user_bp.get_projects'))
+    return redirect(url_for('dashboard_bp.get_projects'))
 
 
 
@@ -443,7 +443,7 @@ def delete_project(project_id):
 
 
 
-@user_bp.route('/update-education', methods=['GET', 'POST'])
+@dashboard_bp.route('/update-education', methods=['GET', 'POST'])
 @roles_required('Admin')
 def update_education_page():
     """
@@ -461,7 +461,7 @@ def update_education_page():
             current_user.duration = form.duration.data
         db.session.commit()
         flash('Education Page Content updated successfully.', 'success')
-        return redirect(url_for('user_bp.update_education_page'))
+        return redirect(url_for('dashboard_bp.update_education_page'))
     return render_template('dashboard/update-education-content.html', form=form)
 
 
@@ -472,7 +472,7 @@ def update_education_page():
 
 
 
-@user_bp.route("/dashboard", methods=['POST', 'GET'])
+@dashboard_bp.route("/dashboard", methods=['POST', 'GET'])
 @roles_required('Admin')
 @nocache
 def profile():
@@ -490,12 +490,12 @@ def profile():
                            password_form=password_form, socials_form=socials_form, about_me_form=AboutMeForm())
 
 
-@user_bp.route('/about-me', methods=['GET', 'POST'])
+@dashboard_bp.route('/about-me', methods=['GET', 'POST'])
 @roles_required( 'Admin')
 @login_required
 def about_me_form():
     """
-    This function handles the about me page for the user, admin, and contributor.
+    This function handles the about me page for the dashboard, admin, and contributor.
     """
     form = AboutMeForm()
 
@@ -512,10 +512,10 @@ def about_me_form():
             for error in errors:
                 flash(f"{getattr(form, field).label.text}: {error}", 'danger')
 
-    return redirect(url_for('user_bp.profile'))
+    return redirect(url_for('dashboard_bp.profile'))
 
 
-@user_bp.route('/update-social-media', methods=['POST'])
+@dashboard_bp.route('/update-social-media', methods=['POST'])
 @roles_required('Admin')
 def update_social_media_form():
     form = SocialMediaInfoForm()
@@ -532,16 +532,16 @@ def update_social_media_form():
             current_user.hackerrank_url = form.hackerrank.data
         db.session.commit()
         flash('Social media links updated successfully.', 'success')
-        return redirect(url_for('user_bp.profile'))
+        return redirect(url_for('dashboard_bp.profile'))
     else:
         for field, errors in form.errors.items():
             for error in errors:
                 flash(f"{getattr(form, field).label.text}: {error}", 'danger')
-    return redirect(url_for('user_bp.profile'))
+    return redirect(url_for('dashboard_bp.profile'))
 
 
 
-@user_bp.route('/update-phone-number', methods=['POST'])
+@dashboard_bp.route('/update-phone-number', methods=['POST'])
 @roles_required('Admin')
 def update_phone_number():
     form = UpdatePhoneForm()
@@ -555,15 +555,15 @@ def update_phone_number():
         for field, errors in form.errors.items():
             for error in errors:
                 flash(f"{getattr(form, field).label.text}: {error}", 'danger')
-    return redirect(url_for('user_bp.profile'))
+    return redirect(url_for('dashboard_bp.profile'))
 
 
 
-@user_bp.route('/update-email', methods=['POST'])
+@dashboard_bp.route('/update-email', methods=['POST'])
 @roles_required('Admin')
 def update_email():
     """
-    This function updates the All user's email address.
+    This function updates the All dashboard's email address.
     :return:
     """
     form = UpdateEmailForm()
@@ -577,11 +577,11 @@ def update_email():
             for error in errors:
                 flash(f"{getattr(form, field).label.text}: {error}", 'danger')
 
-    return redirect(url_for('user_bp.profile'))
+    return redirect(url_for('dashboard_bp.profile'))
 
 
 
-@user_bp.route('/change-password', methods=['POST'])
+@dashboard_bp.route('/change-password', methods=['POST'])
 @roles_required('Admin')
 def change_password():
     form = ChangePasswordForm()
@@ -591,9 +591,9 @@ def change_password():
 
         if not check_password_hash(current_user.password, current_password):
             flash('Current password is incorrect.', 'danger')
-            return redirect(url_for('user_bp.profile'))
+            return redirect(url_for('dashboard_bp.profile'))
 
-        # Update the user's password
+        # Update the dashboard's password
         current_user.password = generate_password_hash(new_password)
         db.session.commit()
         flash('Your password has been updated.', 'success')
@@ -602,5 +602,5 @@ def change_password():
         for field, errors in form.errors.items():
             for error in errors:
                 flash(f"{getattr(form, field).label.text}: {error}", 'danger')
-    return redirect(url_for('user_bp.profile'))
+    return redirect(url_for('dashboard_bp.profile'))
 

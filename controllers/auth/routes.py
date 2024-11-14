@@ -21,9 +21,9 @@ def login():
     """
     This function handles the login process.
 
-    If a user is already authenticated, redirect them to their profile.
-    If the form is valid on submission, check the user's credentials.
-    If the credentials are valid, log the user in and redirect based on their role.
+    If a dashboard is already authenticated, redirect them to their profile.
+    If the form is valid on submission, check the dashboard's credentials.
+    If the credentials are valid, log the dashboard in and redirect based on their role.
     If the credentials are invalid, flash an error message and render the login form again.
     """
 
@@ -32,7 +32,7 @@ def login():
 
     # Redirect authenticated users directly to their profile
     if current_user.is_authenticated:
-        return redirect(url_for('user_bp.profile'))
+        return redirect(url_for('dashboard_bp.profile'))
 
     form = LoginForm()
 
@@ -45,8 +45,8 @@ def login():
 
         if user and check_password_hash(user.password, password):
             flash('Logged in successfully', 'success')
-            login_user(user, remember=form.remember_me.data)  # Log in user
-            return redirect(url_for('user_bp.profile'))
+            login_user(user, remember=form.remember_me.data)  # Log in dashboard
+            return redirect(url_for('dashboard_bp.profile'))
 
         else:
             flash('Invalid email or password', 'danger')
@@ -112,10 +112,10 @@ def register():
         # Log in the dashboard
         login_user(new_user)
         if new_user.role == "Admin":
-            return redirect(url_for('user_bp.profile'))
+            return redirect(url_for('dashboard_bp.profile'))
         else:
 
-            return redirect(url_for("user_bp.profile"))
+            return redirect(url_for("dashboard_bp.profile"))
 
     else:
         if form.errors:

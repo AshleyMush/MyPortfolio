@@ -37,7 +37,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">About Me</h6>
                 </div>
                 <div class="card-body">
-                    <form id="aboutForm" method="POST" action="{{ url_for('user_bp.about_me_form') }}">
+                    <form id="aboutForm" method="POST" action="{{ url_for('dashboard_bp.about_me_form') }}">
                         {{ about_me_form.hidden_tag() }}
                         <div class="form-group">
                             {{ about_me_form.about.label(class="form-label") }}
@@ -56,7 +56,7 @@
         <h6 class="m-0 font-weight-bold text-primary">Social Media Links</h6>
     </div>
     <div class="card-body">
-        <form id="socialMediaForm" method="POST" action="{{ url_for('user_bp.update_social_media_form') }}">
+        <form id="socialMediaForm" method="POST" action="{{ url_for('dashboard_bp.update_social_media_form') }}">
             {{ socials_form.hidden_tag() }}
             <div class="form-group">
                 {{ socials_form.github.label(class="form-label") }}
@@ -94,7 +94,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Update Email</h6>
                 </div>
                 <div class="card-body">
-                    <form id="emailForm" method="POST" action="{{ url_for('user_bp.update_email') }}">
+                    <form id="emailForm" method="POST" action="{{ url_for('dashboard_bp.update_email') }}">
                         {{ email_form.hidden_tag() }}
                         <div class="form-group">
                             {{ email_form.email.label(class="form-label") }}
@@ -113,7 +113,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Update Phone Number</h6>
                 </div>
                 <div class="card-body">
-                    <form id="phoneForm" method="POST" action="{{ url_for('user_bp.update_phone_number') }}">
+                    <form id="phoneForm" method="POST" action="{{ url_for('dashboard_bp.update_phone_number') }}">
                         {{ phone_form.hidden_tag() }}
                         <div class="form-group">
                             {{ phone_form.phone_number.label(class="form-label") }}
@@ -132,7 +132,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Change Password</h6>
                 </div>
                 <div class="card-body">
-                    <form id="passwordForm" method="POST" action="{{ url_for('user_bp.change_password') }}">
+                    <form id="passwordForm" method="POST" action="{{ url_for('dashboard_bp.change_password') }}">
                         {{ password_form.hidden_tag() }}
                         <div class="form-group">{{ password_form.current_password.label(class="form-label") }}{{ password_form.current_password(class="form-control") }}</div>
                         <div class="form-group">{{ password_form.new_password.label(class="form-label") }}{{ password_form.new_password(class="form-control") }}</div>

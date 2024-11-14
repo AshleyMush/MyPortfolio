@@ -1,6 +1,6 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('user_bp.profile')}}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('dashboard_bp.profile')}}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -10,7 +10,7 @@
 
 
 <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user_bp.profile')}}">
+    <a class="nav-link" href="{{url_for('dashboard_bp.profile')}}">
         <i class="fa-solid  fa-user-large"></i>
         <span>Profile</span>
     </a>
@@ -28,12 +28,12 @@
 
 <li class="nav-item">
     {% if not home_exists %}
-    <a class="nav-link" href="{{ url_for('user_bp.add_home_content') }}">
+    <a class="nav-link" href="{{ url_for('dashboard_bp.add_home_content') }}">
         <i class="fa-solid fa-folder-open"></i>
         <span>Add Home Page Content</span>
     </a>
     {% else %}
-    <a class="nav-link" href="{{ url_for('user_bp.update_home_page') }}">
+    <a class="nav-link" href="{{ url_for('dashboard_bp.update_home_page') }}">
         <i class="fa-solid  fa-folder-open"></i>
         <span>Edit Home Page Content</span>
     </a>
@@ -61,10 +61,10 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Modify Page</h6>
-                <a class="collapse-item" href="{{url_for('user_bp.get_experience')}}"> Work Experience</a>
-                <a class="collapse-item" href="{{url_for('user_bp.get_education')}}">Education</a>
-                <a class="collapse-item" href="{{url_for('user_bp.get_skills')}}">Skills</a>
-                <a class="collapse-item" href="{{url_for('user_bp.get_languages')}}">Languages</a>
+                <a class="collapse-item" href="{{url_for('dashboard_bp.get_experience')}}"> Work Experience</a>
+                <a class="collapse-item" href="{{url_for('dashboard_bp.get_education')}}">Education</a>
+                <a class="collapse-item" href="{{url_for('dashboard_bp.get_skills')}}">Skills</a>
+                <a class="collapse-item" href="{{url_for('dashboard_bp.get_languages')}}">Languages</a>
 
                 
             </div>
@@ -78,7 +78,7 @@
 
 
 <li class="nav-item">
-    <a class="nav-link" href="{{url_for('user_bp.get_projects')}}">
+    <a class="nav-link" href="{{url_for('dashboard_bp.get_projects')}}">
         <i class="fa-solid  fa-folder-open"></i>
         <span>Modify Project Page</span>
     </a>

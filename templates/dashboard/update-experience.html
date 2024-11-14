@@ -12,7 +12,7 @@
     </div>
 </section>
 
-<form action="{{ url_for('user_bp.update_experience', experience_id=experience.id) }}" method="POST">
+<form action="{{ url_for('dashboard_bp.update_experience', experience_id=experience.id) }}" method="POST">
     {{ form.hidden_tag() }}
     <div class="container mt-4">
         <div class="form-group">

@@ -6,7 +6,7 @@ from flask_ckeditor import CKEditor
 from flask_wtf.csrf import CSRFProtect
 from models import db
 from models.user import User
-from controllers.user import user_bp
+from controllers.dashboard import dashboard_bp
 from controllers.auth import auth_bp
 from controllers.portfolio import portfolio_bp
 from sqlalchemy.exc import SQLAlchemyError
@@ -53,7 +53,7 @@ def load_user(user_id):
     return db.session.get(User, user_id)
 
 # Register Blueprints
-app.register_blueprint(user_bp)
+app.register_blueprint(dashboard_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(portfolio_bp)
 
