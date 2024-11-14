@@ -31,39 +31,42 @@ def contact():
 
     # Retrieve the reCAPTCHA secret and site keys
     secret_key = os.environ.get('RECAPTCHA_SECRET_KEY')
-    site_key = os.environ.get('RECAPTCHA_SITE_KEY')  # Add this line
+    site_key = os.environ.get('RECAPTCHA_SITE_KEY')
 
-    # Check for reCAPTCHA response
-    recaptcha_response = request.form.get('g-recaptcha-response')
-    data = {
-        'secret': secret_key,
-        'response': recaptcha_response
-    }
+    # Only process the form if it is a POST request (i.e., the form was submitted)
+    if request.method == 'POST':
+        # Check for reCAPTCHA response
+        recaptcha_response = request.form.get('g-recaptcha-response')
+        data = {
+            'secret': secret_key,
+            'response': recaptcha_response
+        }
 
-    # Send the request to Google for verification
-    verify_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
-    result = verify_response.json()
+        # Send the request to Google for verification
+        verify_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
+        result = verify_response.json()
 
-    # Verify reCAPTCHA result before processing form
-    if form.validate_on_submit() and result.get('success'):
-        name = bleach.clean(form.name.data)
-        email = bleach.clean(form.email.data)
-        message = bleach.clean(form.message.data)
+        # Verify reCAPTCHA result before processing form
+        if form.validate_on_submit() and result.get('success'):
+            name = bleach.clean(form.name.data)
+            email = bleach.clean(form.email.data)
+            message = bleach.clean(form.message.data)
 
-        flash('Message sent successfully', 'success')
+            # Flash success message
+            flash('Message sent successfully', 'success')
 
-        # Send emails
-        send_admin_email(name=name, subject=subject, email=email, message=message)
-        send_user_response_email(name=name, email=email, subject=subject)
+            # Send emails
+            send_admin_email(name=name, subject=subject, email=email, message=message)
+            send_user_response_email(name=name, email=email, subject=subject)
 
-        return redirect(url_for('portfolio_bp.contact'))
-    else:
-        # Handle reCAPTCHA or form validation errors
-        if not result.get('success'):
-            flash('Please complete the CAPTCHA to submit the form.', 'danger')
-        for field, errors in form.errors.items():
-            for error in errors:
-                flash(f'Error in {field}: {error}', 'danger')
+            return redirect(url_for('portfolio_bp.contact'))
+        else:
+            # Handle reCAPTCHA or form validation errors
+            if not result.get('success'):
+                flash('Please complete the CAPTCHA to submit the form.', 'danger')
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f'Error in {field}: {error}', 'danger')
 
     # Pass the site_key to the template
     return render_template(
@@ -71,7 +74,7 @@ def contact():
         form=form,
         current_year=CURRENT_YEAR,
         user=user,
-        site_key=site_key  # Add this line
+        site_key=site_key
     )
 
 
