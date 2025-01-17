@@ -18,16 +18,13 @@
                             Solutions</span></h1>
 
 
-                    {% if home and user %}
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
                         <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder"
                             href="{{ url_for('portfolio_bp.resume') }}">Resume</a>
                         <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder"
                             href="{{ url_for('portfolio_bp.projects') }}">Projects</a>
                     </div>
-                    {% else %}
-                    <p class="text-center">Explore our resume and projects once we launch!</p>
-                    {% endif %}
+
 
                 </div>
             </div>
@@ -332,20 +329,12 @@
             <div class="col-xxl-8">
                 <div class="text-center my-5">
                     <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Me</span></h2>
-                    {% if home %}
-                    <p class="lead fw-light mb-4">{{ home.subheading }}</p>
-                    <p class="text-muted">{{ home.description }}</p>
-                    {% else %}
-                    <p class="lead fw-light mb-4">Welcome! We’re setting up content. Stay tuned!</p>
-                    {% endif %}
+                    <p class="lead fw-light mb-4">Hey there, I am Ashley!</p>
+                    <p class="text-muted">I am a backend and automation specialist, I design and deploy scalable applications, integrate APIs, and create custom tools that streamline business operations. With expertise in Python, SQL, and Flask, I’m passionate about delivering impactful solutions tailored to client needs.</p>
                     <!-- Social Links Section -->
                     <div class="d-flex justify-content-center fs-2 gap-4">
-                        {% if user and user.linkedin_url %}
-                        <a class="text-gradient" href="{{ user.linkedin_url }}"><i class="bi bi-linkedin"></i></a>
-                        {% endif %}
-                        {% if user and user.github_url %}
-                        <a class="text-gradient" href="{{ user.github_url }}"><i class="bi bi-github"></i></a>
-                        {% endif %}
+                        <a class="text-gradient" href="https://www.linkedin.com/in/ashley-mush/"><i class="bi bi-linkedin"></i></a>
+                        <a class="text-gradient" href="https://github.com/AshleyMush"><i class="bi bi-github"></i></a>
                     </div>
 
                 </div>

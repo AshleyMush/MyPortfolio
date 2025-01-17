@@ -40,8 +40,33 @@
                     </div>
                 </div>
                 {% endfor %}
+
                 {% else %}
-                <p>No work Experience has been added yet, come back another time.</p>
+
+
+                <div class="card shadow border-0 rounded-4 mb-5">
+                    <div class="card-body p-5">
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-primary fw-bolder mb-2">2023-Present</div>
+                                    <div class="small fw-bolder mb-2">Web developer</div>
+                                    <div class="small text-muted mb-2">Self employed | Remote</div>
+                                    <div class="small text-muted ">United Kingdom</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <div>Developed and deployed customized backend solutions and automation tools for various clients, focusing on enhancing business efficiency. Projects include web applications built with Flask and SQL, API integrations for real-time data, and internal tools that reduced administrative time by over 20%. Currently expanding expertise in full-stack development with a focus on React.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
                 {% endif %}
 
 
@@ -75,99 +100,109 @@
                 </div>
                 {% endfor %}
                 {% else %}
-                <p>No Education has been added yet, come back another time.</p>
-                {% endif %}
-            </section>
-            <!-- Divider-->
-            <div class="pb-5"></div>
-            <!-- Skills Section-->
-            <section>
-                <!-- Skillset Card-->
-                <div class="card shadow border-0 rounded-4 mb-5">
+
+
+
+
+
+
+                                <div class="card shadow border-0 rounded-4 mb-5">
                     <div class="card-body p-5">
-                        <!-- Professional skills list-->
-                        <div class="mb-5">
-                            <div class="d-flex align-items-center mb-4">
-                                <div
-                                    class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
-                                    <i class="bi bi-tools"></i></div>
-                                <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Professional
-                                        Skills</span></h3>
-                            </div>
-                            {% if all_skills %}
-
-                            <div class="row row-cols-1 row-cols-md-3 mb-4">
-                                {% for skill in all_skills[:3] %}
-                                <div class="col mb-4 mb-md-0">
-                                    <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">{{skill.name}}
+                        <div class="row align-items-center gx-5">
+                            <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                <div class="bg-light p-4 rounded-4">
+                                    <div class="text-secondary fw-bolder mb-2">2021-2024</div>
+                                    <div class="mb-2">
+                                        <div class="small fw-bolder">University </div>
+                                    </div>
+                                    <div class="fst-italic">
+                                        <div class="small text-muted">Bachelor of Science (BSc) in Computer Science</div>
                                     </div>
                                 </div>
-
-                                {% endfor %}
                             </div>
-
-
-                            <div class="row row-cols-1 row-cols-md-3">
-                                {% for skill in all_skills[3:6] %}
-                                <div class="col mb-4 mb-md-0">
-                                    <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">{{skill.name}}
-                                    </div>
-                                </div>
-
-                                {% endfor %}
+                            <div class="col-lg-8">
+                                <div>
+    <ul>
+        <li>Completed a 4-year degree program in Computer Science.</li>
+        <li>Gained expertise in software development, algorithms, data structures, databases, and computer networks.</li>
+        <li>Developed strong problem-solving skills and proficiency in multiple programming languages, including Python, Java, C/C++, and SQL.</li>
+        <li>Collaborated on various projects, demonstrating teamwork and effective communication.</li>
+    </ul>
+</div>
                             </div>
-                            {% else %}
-                            <p>No Skills have been added yet, come back another time.</p>
-                            {% endif %}
-
-
-
-
-
-
-
-                        </div>
-
-
-                        <!-- Languages list-->
-                        <div class="mb-0">
-                            <div class="d-flex align-items-center mb-4">
-                                <div
-                                    class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
-                                    <i class="bi bi-code-slash"></i></div>
-                                <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Languages</span></h3>
-                            </div>
-
-                            {% if all_languages %}
-
-                            <div class="row row-cols-1 row-cols-md-3 mb-4">
-                                {% for language in all_languages[:3] %}
-                                <div class="col mb-4 mb-md-0">
-                                    <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">
-                                        {{language.name}}</div>
-                                </div>
-
-                                {% endfor %}
-                            </div>
-
-
-                            <div class="row row-cols-1 row-cols-md-3">
-                                {% for language in all_languages[3:6] %}
-                                <div class="col mb-4 mb-md-0">
-                                    <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">{{language.name}}
-                                    </div>
-                                </div>
-
-                                {% endfor %}
-                            </div>
-                            {% else %}
-                            <p>No Languages have been added yet, come back another time.</p>
-                            {% endif %}
-
                         </div>
                     </div>
                 </div>
-            </section>
+
+
+                {% endif %}
+          <section class="container py-5">
+    <h2 class="text-center mb-4 text-white">Our Work</h2>
+    <!-- Divider -->
+    <div class="pb-5"></div>
+
+    <!-- Skills Section -->
+    <section>
+        <div class="card shadow border-0 rounded-4 mb-5">
+            <div class="card-body p-5">
+                <!-- Professional Skills -->
+                <div class="mb-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
+                            <i class="bi bi-tools"></i>
+                        </div>
+                        <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Professional Skills</span></h3>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">System Design</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Web Development</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Data Analytics</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Graphic Design</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">IT Support</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">MS Office Suite</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="mb-0">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3">
+                            <i class="bi bi-code-slash"></i>
+                        </div>
+                        <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Languages</span></h3>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Python</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">JavaScript</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">SQL and SQLAlchemy</div>
+                        </div>
+                        <div class="col">
+                            <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">Git and Git Bash</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
         </div>
     </div>
 </div>
