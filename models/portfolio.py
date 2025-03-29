@@ -12,7 +12,7 @@ from . import db
 
 class Home(db.Model):
     __tablename__ = 'HomePage'
-    __table_args__ = {'schema': 'portfolio
+    __table_args__ = {'schema': 'portfolio'}
 
     id: Mapped[int] = mapped_column(primary_key=True)
     subheading: Mapped[str] = mapped_column(String(2000), nullable=False)
@@ -47,6 +47,8 @@ class Experience(db.Model):
 
 class Education(db.Model):
     __tablename__ = 'Education'
+    __table_args__ = {'schema': 'portfolio'}
+
     id: Mapped[int] = mapped_column(primary_key=True)
     duration: Mapped[str] = mapped_column(String(500))
     institution: Mapped[str] = mapped_column(String(2000))
