@@ -10,6 +10,7 @@ from . import db
 
 class User(db.Model, UserMixin):
     __tablename__ = "UserDetails"
+    __table_args__ = {'schema': 'portfolio'}
     id : Mapped[int] = mapped_column(primary_key=True)
     email : Mapped[str] = mapped_column(String(2000), nullable=True)
     password : Mapped[str] = mapped_column(String(2000), nullable=False)
