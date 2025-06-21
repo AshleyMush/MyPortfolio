@@ -132,7 +132,7 @@ def forgot_password():
         user = User.query.filter_by(email=email).first()
         if user:
             send_password_reset_email(user.email)
-            flash('A password reset email has been sent to your email address.', 'info')
+            flash('If the email is registered, a password reset link has been sent', 'info')
             return redirect(url_for('auth_bp.login'))
         else:
             flash('Email address not found.', 'danger')
