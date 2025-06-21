@@ -84,7 +84,7 @@ def register():
         role = 'Admin'  # First dashboard becomes Admin
     else:
 
-        flash('Registration is closed.', 'info')
+        flash('Registration is closed. ', 'info')
         return redirect(url_for('portfolio_bp.home'))
 
     if form.validate_on_submit() and form.data:
