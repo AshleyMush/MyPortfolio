@@ -50,22 +50,17 @@
     {% endfor %}
   </div>
 
-  <!-- reCAPTCHA (Invisible) button -->
-  <button class="g-recaptcha btn btn-primary btn-lg w-100"
-          data-sitekey="{{ site_key }}"
-          data-callback="onSubmit"
-          data-size="invisible"
-          id="submit-button">
-    Send Message
-  </button>
+<!-- reCAPTCHA checkbox widget -->
+<div class="g-recaptcha mb-3" data-sitekey="{{ site_key }}"></div>
+
+<!-- Submit button -->
+<div class="d-grid">
+  {{ form.submit(class="btn btn-primary btn-lg", id="submit-button") }}
+</div>
+
 </form>
 
-<!-- reCAPTCHA submission script -->
-<script>
-  function onSubmit(token) {
-    document.getElementById("contact-form").submit();
-  }
-</script>
+
 
         </div>
       </div>
