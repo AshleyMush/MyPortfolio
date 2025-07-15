@@ -1,0 +1,19 @@
+# Disallow GPTBot (OpenAI)
+User-agent: GPTBot
+Disallow: /
+
+# Disallow ClaudeBot (Anthropic)
+User-agent: ClaudeBot
+Disallow: /
+
+# Disallow Perplexity
+User-agent: PerplexityBot
+Disallow: /
+
+# Disallow Google-Extended (used for Bard/Gemini training)
+User-agent: Google-Extended
+Disallow: /
+
+# Allow others (optional)
+User-agent: *
+Disallow:

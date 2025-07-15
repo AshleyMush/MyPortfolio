@@ -1,0 +1,7 @@
+# Allow everything except admin, dashboard, and static uploads
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /static/uploads/
+
+
