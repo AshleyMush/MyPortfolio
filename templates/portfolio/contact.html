@@ -20,46 +20,53 @@
           {% include 'dashboard/flash-messages.html' %}
           <!-- * * * * * Contact Form * * * *-->
 
-          <form action="{{ url_for('portfolio_bp.contact') }}" method="POST">
-            {{ form.hidden_tag() }}
+          <form id="contact-form" action="{{ url_for('portfolio_bp.contact') }}" method="POST">
+  {{ form.hidden_tag() }}
 
-            <!-- Name input-->
-            <div class="form-floating mb-3">
-              {{ form.name.label(class="form-label") }} {{
-              form.name(class="form-control", id="name", placeholder="Full
-              name") }} {% for error in form.name.errors %}
-              <div class="invalid-feedback">{{ error }}</div>
-              {% endfor %}
-            </div>
+  <!-- Name input -->
+  <div class="form-floating mb-3">
+    {{ form.name.label(class="form-label") }}
+    {{ form.name(class="form-control", placeholder="Full name") }}
+    {% for error in form.name.errors %}
+      <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
 
-            <!-- Email address input-->
-            <div class="form-floating mb-3">
-              {{ form.email.label(class="form-label") }} {{
-              form.email(class="form-control", id="email", placeholder="Email
-              address") }} {% for error in form.email.errors %}
-              <div class="invalid-feedback">{{ error }}</div>
-              {% endfor %}
-            </div>
+  <!-- Email input -->
+  <div class="form-floating mb-3">
+    {{ form.email.label(class="form-label") }}
+    {{ form.email(class="form-control", placeholder="Email address") }}
+    {% for error in form.email.errors %}
+      <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
 
-            <!-- Message input-->
-            <div class="form-floating mb-3">
-              {{ form.message(class="form-control", id="message",
-              placeholder="Enter your message here...", style="height: 10rem;")
-              }} {{ form.message.label(class="form-label") }} {% for error in
-              form.message.errors %}
-              <div class="invalid-feedback">{{ error }}</div>
-              {% endfor %}
-            </div>
+  <!-- Message input -->
+  <div class="form-floating mb-3">
+    {{ form.message(class="form-control", placeholder="Enter your message here...", style="height: 10rem;") }}
+    {{ form.message.label(class="form-label") }}
+    {% for error in form.message.errors %}
+      <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
 
-            <!-- Add the reCAPTCHA widget here -->
-            <div class="g-recaptcha mb-3" data-sitekey="{{ site_key }}"></div>
+  <!-- reCAPTCHA (Invisible) button -->
+  <button class="g-recaptcha btn btn-primary btn-lg w-100"
+          data-sitekey="{{ site_key }}"
+          data-callback="onSubmit"
+          data-size="invisible"
+          id="submit-button">
+    Send Message
+  </button>
+</form>
 
-            <!-- Submit Button-->
-            <div class="d-grid">
-              {{ form.submit(class="btn btn-primary btn-lg", id="submit-button")
-              }}
-            </div>
-          </form>
+<!-- reCAPTCHA submission script -->
+<script>
+  function onSubmit(token) {
+    document.getElementById("contact-form").submit();
+  }
+</script>
+
         </div>
       </div>
     </div>
